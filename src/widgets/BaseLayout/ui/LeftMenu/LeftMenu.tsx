@@ -1,5 +1,6 @@
-import styles from "./LeftMenu.module.css";
 import Link from "next/link";
+
+import styles from "./LeftMenu.module.css";
 
 const LeftMenu = () => {
   return (

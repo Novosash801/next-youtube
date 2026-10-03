@@ -1,5 +1,6 @@
-import AddVideoPage from "@/screen/AddVideoPage";
 import { Metadata } from "next";
+
+import AddVideoPage from "@/screen/AddVideoPage";
 
 export const metadata: Metadata = {
   title: "Добавить видео",

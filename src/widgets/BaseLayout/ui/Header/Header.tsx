@@ -1,7 +1,9 @@
 import Image from "next/image";
-import styles from "./Header.module.css";
-import logo from "./image.png";
 import Link from "next/link";
+
+import logo from "./image.png";
+
+import styles from "./Header.module.css";
 
 const Header = () => {
   return (
