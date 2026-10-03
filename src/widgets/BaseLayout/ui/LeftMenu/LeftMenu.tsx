@@ -1,12 +1,12 @@
 import styles from "./LeftMenu.module.css";
+import Link from "next/link";
 
 const LeftMenu = () => {
   return (
     <aside className={styles.leftMenu}>
       <nav className={styles.nav}>
-        <a>Главная</a>
-        <a>Поиск</a>
-        <a>Помощь</a>
+        <Link href="/editor/addVideo">Добавить видео</Link>
+        <Link href="/profile/1">Добавить профиль</Link>
       </nav>
     </aside>
   );

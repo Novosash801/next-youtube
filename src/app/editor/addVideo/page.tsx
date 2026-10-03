@@ -1,5 +1,16 @@
+import AddVideoPage from "@/screen/AddVideoPage";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Добавить видео",
+};
+
 function addVideoPage() {
-  return <div>addVideo</div>;
+  return (
+    <div>
+      <AddVideoPage />
+    </div>
+  );
 }
 
 export default addVideoPage;
