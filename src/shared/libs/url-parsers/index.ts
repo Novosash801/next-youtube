@@ -1,1 +1,1 @@
-export { isAllowedHost, parseYouTube, YOUTUBE_DOMAINS } from "./youtubeParser";
+export { parseYouTube } from "./youtubeParser";
