@@ -4,8 +4,9 @@ import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
+import { is, ur } from "zod/v4/locales";
 
-import { parseYouTube } from "@/shared/libs";
+import { isAllowedHost, parseYouTube, YOUTUBE_DOMAINS } from "@/shared/libs";
 
 import styles from "./AddVideoPage.module.css";
 
@@ -14,7 +15,34 @@ type Inputs = {
 };
 
 const schema = z.object({
-  videoUrl: z.string().min(1, { message: "Поле не должно быть пустым" }),
+  videoUrl: z
+    .string()
+    .min(1, { message: "Поле не должно быть пустым" })
+    // .refine(async (url) => {
+    //   const value = new URL(url);
+    //   return isAllowedHost(value.host, YOUTUBE_DOMAINS);
+    // }, "Ссылка должна быть на YouTube-видео")
+    .superRefine(async (url, ctx) => {
+      let parsedUrl: URL;
+      try {
+        parsedUrl = new URL(url);
+      } catch (error) {
+        ctx.addIssue({
+          code: "custom",
+          message: "Поле должно содержать ссылку",
+          input: url,
+        });
+        return;
+      }
+
+      if (!isAllowedHost(parsedUrl.host, YOUTUBE_DOMAINS)) {
+        ctx.addIssue({
+          code: "custom",
+          message: "Поле должно содержать ссылку",
+          input: url,
+        });
+      }
+    }),
 });
 
 type Schema = z.infer<typeof schema>;
@@ -29,27 +57,15 @@ const AddVideoPage = () => {
     formState: { errors },
   } = useForm<Inputs>({ resolver: zodResolver(schema) });
   const onSubmit: SubmitHandler<Inputs> = (data) => {
-    console.log(data);
-    e.preventDefault();
+    const url = new URL(data.videoUrl);
 
-    const input = e.currentTarget.elements.namedItem("video-url");
-    const url = (input as HTMLInputElement | null)?.value ?? "";
-
-    let parsedUrl: URL | null = null;
-
-    try {
-      parsedUrl = new URL(url);
-    } catch (error) {
-      console.error("error", error);
-    }
-
-    if (!parsedUrl) return;
-
-    const videoId = parseYouTube(parsedUrl);
+    const videoId = parseYouTube(url);
 
     if (!videoId) return;
     setVideoId(videoId);
   };
+
+  const urlError = errors.videoUrl?.message;
 
   return (
     <div className={styles.video}>
@@ -61,8 +77,10 @@ const AddVideoPage = () => {
           type="text"
           {...register("videoUrl")}
         />
+
+        {urlError && <p>Ошибка при поиске видео: {urlError}</p>}
         <button className={styles.button} type="submit">
-          Add Video
+          Загрузить
         </button>
       </form>
       {videoId && (
