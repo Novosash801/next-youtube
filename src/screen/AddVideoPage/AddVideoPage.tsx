@@ -4,7 +4,6 @@ import { useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import { is, ur } from "zod/v4/locales";
 
 import { isAllowedHost, parseYouTube, YOUTUBE_DOMAINS } from "@/shared/libs";
 
@@ -18,15 +17,12 @@ const schema = z.object({
   videoUrl: z
     .string()
     .min(1, { message: "Поле не должно быть пустым" })
-    // .refine(async (url) => {
-    //   const value = new URL(url);
-    //   return isAllowedHost(value.host, YOUTUBE_DOMAINS);
-    // }, "Ссылка должна быть на YouTube-видео")
     .superRefine(async (url, ctx) => {
       let parsedUrl: URL;
+
       try {
         parsedUrl = new URL(url);
-      } catch (error) {
+      } catch {
         ctx.addIssue({
           code: "custom",
           message: "Поле должно содержать ссылку",
@@ -38,7 +34,7 @@ const schema = z.object({
       if (!isAllowedHost(parsedUrl.host, YOUTUBE_DOMAINS)) {
         ctx.addIssue({
           code: "custom",
-          message: "Поле должно содержать ссылку",
+          message: "Ссылка не на YouTube видео",
           input: url,
         });
       }
@@ -56,13 +52,23 @@ const AddVideoPage = () => {
     watch,
     formState: { errors },
   } = useForm<Inputs>({ resolver: zodResolver(schema) });
-  const onSubmit: SubmitHandler<Inputs> = (data) => {
+
+  const onSubmit: SubmitHandler<Inputs> = async (data) => {
     const url = new URL(data.videoUrl);
 
     const videoId = parseYouTube(url);
 
     if (!videoId) return;
     setVideoId(videoId);
+
+    await fetch("/api/videos", {
+      method: "POST",
+      body: JSON.stringify({ videoId }),
+    });
+
+    const res = (await fetch("/api/videos")).json();
+
+    console.log("res", res);
   };
 
   const urlError = errors.videoUrl?.message;
@@ -73,16 +79,25 @@ const AddVideoPage = () => {
         <label htmlFor="video-url">Video URL:</label>
         <input
           className={styles.input}
-          placeholder="Ссылка на Youtube видео"
+          placeholder="link"
           type="text"
           {...register("videoUrl")}
         />
 
-        {urlError && <p>Ошибка при поиске видео: {urlError}</p>}
+        {urlError && <p>{urlError}</p>}
         <button className={styles.button} type="submit">
           Загрузить
         </button>
+
+        <button
+          className={styles.button}
+          type="reset"
+          onClick={() => setVideoId("")}
+        >
+          Сбросить
+        </button>
       </form>
+
       {videoId && (
         <iframe
           width="1491"
