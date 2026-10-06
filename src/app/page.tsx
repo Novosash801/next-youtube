@@ -1,7 +1,12 @@
-export default function HomePage() {
+
+import HomePage from "@/screen/HomePage";
+
+const page = () => {
   return (
     <div>
-      <h1>Главная страница</h1>
+      <HomePage />
     </div>
   );
-}
+};
+
+export default page;
