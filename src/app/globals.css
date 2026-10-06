@@ -5,8 +5,9 @@
 }
 
 body {
-  background-color: #fff;
-  color: #0f0f0f;
+  color: #fff;
+  background-color: #0f0f0f;
+  font-family: Helvetica, Arial, sans-serif;
 }
 
 a {

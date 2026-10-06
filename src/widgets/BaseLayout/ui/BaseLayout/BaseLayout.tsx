@@ -8,7 +8,7 @@ import styles from "./BaseLayout.module.css";
 const BaseLayout = ({ children }: { children: ReactNode }) => {
   return (
     <div className={styles.container}>
-      <Header />
+      <Header profileId={"123"} />
       <LeftMenu />
       {children}
     </div>

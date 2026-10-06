@@ -1,17 +1,33 @@
 import Image from "next/image";
 import Link from "next/link";
 
-import logo from "./image.png";
-
 import styles from "./Header.module.css";
 
-const Header = () => {
+type HeaderProps = {
+  profileId: string;
+};
+
+const Header = ({ profileId }: HeaderProps) => {
   return (
-    <div className={styles.header}>
+    <header className={styles.header}>
       <Link href="/">
-        <Image className={styles.logo} src={logo} alt={"logo"} width={50} />
+        <Image
+          src="/youtube-logo-icon.svg"
+          alt={"logo"}
+          width={100}
+          height={24}
+        />
       </Link>
-    </div>
+
+      <div className={styles.rightPart}>
+        <Link href={`/editor/addVideo`} className={styles.addVideoLink}>
+          Создать
+        </Link>
+        <Link href={`/profile/${profileId}`} className={styles.yourProfileLink}>
+          <div className={styles.hiddenText}>Перейти в профиль</div>
+        </Link>
+      </div>
+    </header>
   );
 };
 
