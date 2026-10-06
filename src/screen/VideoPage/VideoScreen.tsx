@@ -8,8 +8,10 @@ const VideoScreen = ({ videoId }: VideoScreenProps) => {
   return (
     <div className={styles.video}>
       <iframe
+        width="550"
+        height="500"
         key={videoId}
-        src={`https://www.youtube.com/embed/${videoId}`}
+        src={`https://www.youtube.com/embed/${videoId}?autoplay=1`}
         title="44 года под домашним арестом."
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
         referrerPolicy="strict-origin-when-cross-origin"
