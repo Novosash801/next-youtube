@@ -1,21 +1,15 @@
+import VideoScreen from "@/screen/VideoPage";
+
 type VideoPageProps = {
   params: Promise<{ videoId: string }>;
 };
 
 async function VideoPage({ params }: VideoPageProps) {
   const { videoId } = await params;
-  console.log("videoId", videoId);
 
   return (
     <div>
-      <iframe
-        key={videoId}
-        src={`https://www.youtube.com/embed/${videoId}`}
-        title="44 года под домашним арестом."
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        referrerPolicy="strict-origin-when-cross-origin"
-        allowFullScreen
-      ></iframe>
+      <VideoScreen videoId={videoId} />
     </div>
   );
 }

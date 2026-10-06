@@ -40,7 +40,6 @@ const HomePage = () => {
               height={150}
             />
           </Link>
-          
         ))
       ) : (
         <div>Нет видео</div>
