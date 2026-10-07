@@ -100,8 +100,7 @@ const AddVideoPage = () => {
 
       {videoId && (
         <iframe
-          width="1491"
-          height="839"
+          className={styles.player}
           src={`https://www.youtube.com/embed/${videoId}`}
           title="44 года под домашним арестом."
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"

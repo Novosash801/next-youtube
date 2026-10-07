@@ -19,3 +19,11 @@
   border: none;
   border-radius: 4px;
 }
+
+.player {
+  width: 100%;
+  max-width: 1491px;
+  aspect-ratio: 1491 / 839;
+  margin-top: 16px;
+  border: none;
+}
