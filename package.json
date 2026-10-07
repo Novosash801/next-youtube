@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "lint:fix": "eslint --fix"
+    "lint:fix": "eslint --fix",
+    "lint:style": "stylelint \"**/*.{css,scss}\"",
+    "lint:style:fix": "stylelint \"**/*.{css,scss}\" --fix"
   },
   "dependencies": {
     "next": "16.2.10",
@@ -24,6 +26,10 @@
     "eslint-config-next": "16.2.10",
     "eslint-plugin-simple-import-sort": "^14.0.0",
     "react-hook-form": "^7.89.0",
+    "stylelint": "^17.16.0",
+    "stylelint-config-recess-order": "^7.8.0",
+    "stylelint-config-standard": "^40.0.0",
+    "stylelint-order": "^8.1.1",
     "tailwindcss": "^4",
     "typescript": "^5",
     "typescript-plugin-css-modules": "^5.2.0",
