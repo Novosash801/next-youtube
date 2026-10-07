@@ -1,0 +1,20 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.notFound {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.image {
+  border-radius: 45px;
+}
+
+.title {
+  padding-top: 15px;
+}

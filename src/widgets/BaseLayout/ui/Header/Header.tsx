@@ -1,6 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 
+import Logo from "@/shared/assets/icons/logo.svg";
+
 import styles from "./Header.module.css";
 
 type HeaderProps = {
@@ -12,7 +14,7 @@ const Header = ({ profileId }: HeaderProps) => {
     <header className={styles.header}>
       <Link href="/">
         <Image
-          src="/youtube-logo-icon.svg"
+          src={Logo}
           alt={"logo"}
           width={100}
           height={24}
