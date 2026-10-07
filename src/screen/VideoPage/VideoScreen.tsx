@@ -8,7 +8,7 @@ const VideoScreen = ({ videoId }: VideoScreenProps) => {
   return (
     <div className={styles.video}>
       <iframe
-        width="550"
+        width="100%"
         height="500"
         key={videoId}
         src={`https://www.youtube.com/embed/${videoId}?autoplay=1`}
