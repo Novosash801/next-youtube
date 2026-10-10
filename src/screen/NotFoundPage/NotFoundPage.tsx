@@ -1,6 +1,8 @@
 import Image from "next/image";
+import Link from "next/link";
 
-import NotFoundImage from "@/shared/assets/img/not-found.gif";
+import Logo from "@/shared/assets/icons/youtube-icon.svg";
+import NotFoundImage from "@/shared/assets/img/monkey.png";
 
 import styles from "./NotFoundPage.module.css";
 
@@ -9,12 +11,17 @@ const NotFoundPage = () => {
     <div className={styles.container}>
       <div className={styles.notFound}>
         <Image
+          unoptimized
           className={styles.image}
           src={NotFoundImage}
-          width={500}
           alt={"not-found"}
         />
-        <h1 className={styles.title}>404 - Страница не найдена</h1>
+        <p>Эта страница недоступна</p>
+        <p>Подсказать что-то ?</p>
+
+        <Link href="/" className={styles.link}>
+          <Image src={Logo} alt={"Логотип компании"} />
+        </Link>
       </div>
     </div>
   );
