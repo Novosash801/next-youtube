@@ -21,14 +21,13 @@ const VideoThumbnail = ({ videoId }: VideoThumbnailProps) => {
   }
 
   return (
-    <div>
+    <>
       <Link href="/preview" className={styles.videoPreview}>
         <Image
+          fill
           className={styles.videoImage}
           src={`https://img.youtube.com/vi/${videoId}/hqdefault.jpg`}
           alt="Видео с youtube"
-          width={350}
-          height={197}
           onError={() => setHasError(true)}
         />
       </Link>
@@ -48,7 +47,7 @@ const VideoThumbnail = ({ videoId }: VideoThumbnailProps) => {
         </div>
       </div>
       <Link href={`/video/${videoId}`} className={styles.link} />
-    </div>
+    </>
   );
 };
 
