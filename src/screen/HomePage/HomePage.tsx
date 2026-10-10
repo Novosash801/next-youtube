@@ -5,6 +5,33 @@ import Link from "next/link";
 
 import styles from "./HomePage.module.css";
 
+type VideoThumbnailProps = {
+  videoId: string;
+};
+
+const VideoThumbnail = ({ videoId }: VideoThumbnailProps) => {
+  const [hasError, setHasError] = useState(false);
+
+  if (hasError) {
+    return (
+      <div className={styles.placeholder}>
+        <span>Видео недоступно</span>
+      </div>
+    );
+  }
+
+  return (
+    <Image
+      className={styles.image}
+      src={`https://img.youtube.com/vi/${videoId}/hqdefault.jpg`}
+      alt="Видео с youtube"
+      width={350}
+      height={197}
+      onError={() => setHasError(true)}
+    />
+  );
+};
+
 const HomePage = () => {
   const [isLoading, setLoading] = useState(true);
   const [data, setData] = useState<string[] | null>(null);
@@ -28,17 +55,11 @@ const HomePage = () => {
   }
 
   return (
-    <div className={styles.home}>
+    <div className={styles.container}>
       {data && data.length > 0 ? (
         data.map((videoId) => (
           <Link key={videoId} href={`/video/${videoId}`}>
-            <Image
-              src={`https://img.youtube.com/vi/${videoId}/hqdefault.jpg`}
-              key={videoId}
-              alt="Видео с youtube"
-              width={150}
-              height={150}
-            />
+            <VideoThumbnail videoId={videoId} />
           </Link>
         ))
       ) : (
