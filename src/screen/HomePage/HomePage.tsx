@@ -22,24 +22,32 @@ const VideoThumbnail = ({ videoId }: VideoThumbnailProps) => {
 
   return (
     <div>
-      <Image
-        className={styles.videoImage}
-        src={`https://img.youtube.com/vi/${videoId}/hqdefault.jpg`}
-        alt="Видео с youtube"
-        width={350}
-        height={197}
-        onError={() => setHasError(true)}
-      />
+      <Link href="/preview" className={styles.videoPreview}>
+        <Image
+          className={styles.videoImage}
+          src={`https://img.youtube.com/vi/${videoId}/hqdefault.jpg`}
+          alt="Видео с youtube"
+          width={350}
+          height={197}
+          onError={() => setHasError(true)}
+        />
+      </Link>
+
       <div className={styles.videoInfoContainer}>
-        <div className={styles.channelImage}>
+        <Link href={`/video/${videoId}`} className={styles.channelImage}>
           <p className={styles.hiddenText}>Название канала</p>
-        </div>
+        </Link>
 
         <div className={styles.videoInfo}>
-          <p>Название видео</p>
-          <p>Краткое описание</p>
+          <Link href={`/video/${videoId}`} className={styles.videoTitleLink}>
+            Название видео
+          </Link>
+          <Link href="/channel" className={styles.channelNameLink}>
+            Название канала
+          </Link>
         </div>
       </div>
+      <Link href={`/video/${videoId}`} className={styles.link} />
     </div>
   );
 };
@@ -70,9 +78,8 @@ const HomePage = () => {
     <div className={styles.container}>
       {data && data.length > 0 ? (
         data.map((videoId) => (
-          <div className="div" key={videoId}>
+          <div className={styles.videoBlock} key={videoId}>
             <VideoThumbnail videoId={videoId} />
-            <Link href={`/video/${videoId}`} className={styles.link} />
           </div>
         ))
       ) : (
