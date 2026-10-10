@@ -14,17 +14,17 @@
 }
 
 .image {
-  border-radius: 45px;
   width: 185px;
   height: 174px;
   margin-bottom: 10px;
+  border-radius: 45px;
 }
 
 .link {
   display: flex;
-  justify-content: center;
   align-items: center;
-  margin-top: 30px;
+  justify-content: center;
   width: 145px;
   height: 30px;
+  margin-top: 30px;
 }
