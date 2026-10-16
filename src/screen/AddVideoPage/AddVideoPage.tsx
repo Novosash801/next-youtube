@@ -67,35 +67,34 @@ const AddVideoPage = () => {
     });
 
     const res = (await fetch("/api/videos")).json();
-
     console.log("res", res);
   };
 
-  const urlError = errors.videoUrl?.message;
+  const urlErrorMessage = errors.videoUrl?.message;
 
   return (
-    <div className={styles.video}>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <label htmlFor="video-url">Video URL:</label>
-        <input
-          className={styles.input}
-          placeholder="link"
-          type="text"
-          {...register("videoUrl")}
-        />
-
-        {urlError && <p>{urlError}</p>}
-        <button className={styles.button} type="submit">
-          Загрузить
-        </button>
-
-        <button
-          className={styles.button}
-          type="reset"
-          onClick={() => setVideoId("")}
-        >
-          Сбросить
-        </button>
+    <div className={styles.container}>
+      <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+        <h4>Ссылка на видео</h4>
+        <label className={styles.label} htmlFor="video-url">
+          <input
+            className={styles.input}
+            placeholder="ссылка на YouTube"
+            type="text"
+            {...register("videoUrl")}
+          />
+          <button className={styles.submitButton} type="submit">
+            Загрузить
+          </button>
+          <button
+            className={styles.resetButton}
+            type="reset"
+            onClick={() => setVideoId("")}
+          >
+            Сбросить
+          </button>
+          {urlErrorMessage && <p className={styles.errorMessage}>{urlErrorMessage}</p>}
+        </label>
       </form>
 
       {videoId && (

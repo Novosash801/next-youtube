@@ -40,3 +40,7 @@
     opacity: 0;
   }
 }
+
+.channelNameLink {
+  padding-top: 4px;
+}

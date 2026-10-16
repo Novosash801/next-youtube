@@ -14,7 +14,7 @@ const VideoScreen = ({ videoId }: VideoScreenProps) => {
         height={300}
         className={styles.iframe}
         key={videoId}
-        src={`https://www.youtube.com/embed/${videoId}`}
+        src={`https://www.youtube.com/embed/${videoId}autoplay=1`}
         title="44 года под домашним арестом."
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
         referrerPolicy="strict-origin-when-cross-origin"
@@ -22,15 +22,15 @@ const VideoScreen = ({ videoId }: VideoScreenProps) => {
         frameBorder={0}
       />
 
-      <b className={styles.videoTitle}>Название видео</b>
+      <b className={styles.videoTitle}>НАЗВАНИЕ ВИДЕО</b>
 
       <div className={styles.videoInfoContainer}>
-        <Link href="/" className={styles.channelImage}>
-          <div className={styles.hiddenText}>Название канала</div>
+        <Link href="/channel" className={styles.channelImage}>
+          <div className={styles.hiddenText}></div>
         </Link>
 
         <Link href="/" className={styles.channelNameLink}>
-          Название канала
+          НАЗВАНИЕ ВИДЕО
         </Link>
       </div>
     </div>

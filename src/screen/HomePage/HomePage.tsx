@@ -21,8 +21,8 @@ const VideoThumbnail = ({ videoId }: VideoThumbnailProps) => {
   }
 
   return (
-    <>
-      <Link href="/preview" className={styles.videoPreview}>
+    <div className={styles.videoBlock} key={videoId}>
+      <Link href={`/video/${videoId}`} className={styles.videoPreview}>
         <Image
           fill
           className={styles.videoImage}
@@ -33,7 +33,7 @@ const VideoThumbnail = ({ videoId }: VideoThumbnailProps) => {
       </Link>
 
       <div className={styles.videoInfoContainer}>
-        <Link href={`/video/${videoId}`} className={styles.channelImage}>
+        <Link href="/channel" className={styles.channelImage}>
           <p className={styles.hiddenText}>Название канала</p>
         </Link>
 
@@ -47,7 +47,7 @@ const VideoThumbnail = ({ videoId }: VideoThumbnailProps) => {
         </div>
       </div>
       <Link href={`/video/${videoId}`} className={styles.link} />
-    </>
+    </div>
   );
 };
 
@@ -77,9 +77,7 @@ const HomePage = () => {
     <div className={styles.container}>
       {data && data.length > 0 ? (
         data.map((videoId) => (
-          <div className={styles.videoBlock} key={videoId}>
-            <VideoThumbnail videoId={videoId} />
-          </div>
+          <VideoThumbnail videoId={videoId} key={videoId} />
         ))
       ) : (
         <div>Нет видео</div>
