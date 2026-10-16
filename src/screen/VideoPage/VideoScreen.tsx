@@ -14,7 +14,7 @@ const VideoScreen = ({ videoId }: VideoScreenProps) => {
         height={300}
         className={styles.iframe}
         key={videoId}
-        src={`https://www.youtube.com/embed/${videoId}autoplay=1`}
+        src={`https://www.youtube.com/embed/${videoId}`}
         title="44 года под домашним арестом."
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
         referrerPolicy="strict-origin-when-cross-origin"
