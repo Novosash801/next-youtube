@@ -27,31 +27,35 @@ const videoIds: Set<string> = new Set<string>([
 ]);
 
 export async function GET(request: Request) {
-  console.log("url", request.url);
+  const urlObject = new URL(request.url);
+  const videoId = urlObject.searchParams.get("videoId");
+
+  console.log("videoId", videoId);
+
   const promisesVideo = Array.from(videoIds).map(async (videoId) => {
     try {
-      const res = await fetch(
+      const data = await fetch(
         `https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${videoId}&format=json`,
       );
 
-      if (!res.ok) {
+      if (!data.ok) {
         return { videoId, title: null, authorName: null };
       }
 
-      const {
-        title,
-        author_name: authorName,
-        author_url: authorUrl,
-      } = (await res.json()) as OEmbedVideoInfo;
+      const res = await data.json();
 
-      return { videoId, title, authorName, authorUrl };
+      return {
+        videoId,
+        title: res.title,
+        authorName: res.author_name,
+        authorUrl: res.author_url,
+      };
     } catch {
       return { videoId, title: null, authorName: null };
     }
   });
 
   const videos = await Promise.all(promisesVideo);
-  console.log("videos", videos);
   return Response.json({ ok: true, data: videos });
 }
 
