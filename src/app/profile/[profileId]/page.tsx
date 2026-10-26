@@ -4,7 +4,6 @@ type ProfileIdPageProps = {
 
 async function ProfileIdPage({ params }: ProfileIdPageProps) {
   const { profileId } = await params;
-  console.log("ProfileId", profileId);
   return <div>ProfileId: {profileId}</div>;
 }
 

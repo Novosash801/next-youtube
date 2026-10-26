@@ -7,9 +7,11 @@ import styles from "./HomePage.module.css";
 
 type VideoThumbnailProps = {
   videoId: string;
+  title: string | null;
+  authorName: string | null;
 };
 
-const VideoThumbnail = ({ videoId }: VideoThumbnailProps) => {
+const VideoThumbnail = ({ videoId, title, authorName }: VideoThumbnailProps) => {
   const [hasError, setHasError] = useState(false);
 
   if (hasError) {
@@ -34,15 +36,17 @@ const VideoThumbnail = ({ videoId }: VideoThumbnailProps) => {
 
       <div className={styles.videoInfoContainer}>
         <Link href="/channel" className={styles.channelImage}>
-          <p className={styles.hiddenText}>Название канала</p>
+          <p className={styles.hiddenText}>
+            {authorName ?? "Название канала"}
+          </p>
         </Link>
 
         <div className={styles.videoInfo}>
           <Link href={`/video/${videoId}`} className={styles.videoTitleLink}>
-            Название видео
+            {title ?? "Название видео"}
           </Link>
           <Link href="/channel" className={styles.channelNameLink}>
-            Название канала
+            {authorName ?? "Название канала"}
           </Link>
         </div>
       </div>
@@ -51,9 +55,15 @@ const VideoThumbnail = ({ videoId }: VideoThumbnailProps) => {
   );
 };
 
+type VideoData = {
+  videoId: string;
+  title: string | null;
+  authorName: string | null;
+};
+
 const HomePage = () => {
   const [isLoading, setLoading] = useState(true);
-  const [data, setData] = useState<string[] | null>(null);
+  const [data, setData] = useState<VideoData[] | null>(null);
 
   useEffect(() => {
     (async () => {
@@ -76,8 +86,13 @@ const HomePage = () => {
   return (
     <div className={styles.container}>
       {data && data.length > 0 ? (
-        data.map((videoId) => (
-          <VideoThumbnail videoId={videoId} key={videoId} />
+        data.map(({ videoId, title, authorName }) => (
+          <VideoThumbnail
+            videoId={videoId}
+            title={title}
+            authorName={authorName}
+            key={videoId}
+          />
         ))
       ) : (
         <div>Нет видео</div>

@@ -41,7 +41,7 @@ const schema = z.object({
     }),
 });
 
-type Schema = z.infer<typeof schema>;
+// type Schema = z.infer<typeof schema>;
 
 const AddVideoPage = () => {
   const [videoId, setVideoId] = useState("");
@@ -66,8 +66,10 @@ const AddVideoPage = () => {
       body: JSON.stringify({ videoId }),
     });
 
-    const res = (await fetch("/api/videos")).json();
-    console.log("res", res);
+    const res = await fetch("/api/videos");
+    const videos = await res.json();
+
+
   };
 
   const urlErrorMessage = errors.videoUrl?.message;
@@ -93,7 +95,9 @@ const AddVideoPage = () => {
           >
             Сбросить
           </button>
-          {urlErrorMessage && <p className={styles.errorMessage}>{urlErrorMessage}</p>}
+          {urlErrorMessage && (
+            <p className={styles.errorMessage}>{urlErrorMessage}</p>
+          )}
         </label>
       </form>
 
