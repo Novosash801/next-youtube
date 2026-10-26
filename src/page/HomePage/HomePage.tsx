@@ -12,12 +12,14 @@ type VideoThumbnailProps = {
   videoId: string;
   title: string | null;
   authorName: string | null;
+  authorUrl: string | null;
 };
 
 const VideoThumbnail = ({
   videoId,
   title,
   authorName,
+  authorUrl,
 }: VideoThumbnailProps) => {
   const [hasError, setHasError] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
@@ -47,7 +49,7 @@ const VideoThumbnail = ({
       </Link>
 
       <div className={styles.videoInfoContainer}>
-        <Link href="/channel" className={styles.channelImage}>
+        <Link href={`${authorUrl}`} className={styles.channelImage}>
           <div className={styles.hiddenText}>
             {authorName ?? "Название канала"}
           </div>
@@ -58,7 +60,10 @@ const VideoThumbnail = ({
             <b>{title ?? "Название видео"}</b>
           </Link>
 
-          <Link href="/channel" className={styles.channelNameLink}>
+          <Link
+            href={`${authorUrl}`}
+            className={styles.channelNameLink}
+          >
             {authorName ?? "Название канала"}
           </Link>
         </div>
@@ -76,7 +81,7 @@ type VideoData = {
 
 const HomePage = () => {
   const [isLoading, setLoading] = useState(true);
-  const [data, setData] = useState<VideoData[] | null>(null);
+  const [data, setData] = useState<AllVideosDto["data"] | null>(null);
 
   useEffect(() => {
     (async () => {
@@ -99,12 +104,13 @@ const HomePage = () => {
   return (
     <div className={styles.container}>
       {data && data.length > 0 ? (
-        data.map(({ videoId, title, authorName }) => (
+        data.map(({ videoId, title, authorName, authorUrl }) => (
           <VideoThumbnail
             videoId={videoId}
             title={title}
             authorName={authorName}
             key={videoId}
+            authorUrl={authorUrl}
           />
         ))
       ) : (

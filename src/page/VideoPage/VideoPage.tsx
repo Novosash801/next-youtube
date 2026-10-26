@@ -1,4 +1,9 @@
+"use client";
+
+import { useEffect } from "react";
 import Link from "next/link";
+
+import { AllVideosDto, VideoDto } from "@/shared/types/serverTypes";
 
 import styles from "./VideoPage.module.css";
 
@@ -7,6 +12,20 @@ type VideoScreenProps = {
 };
 
 const VideoScreen = ({ videoId }: VideoScreenProps) => {
+  useEffect(() => {
+    (async () => {
+      try {
+        const serverData = await fetch(`/api/videos?videoId=${videoId}`);
+        const response = (await serverData.json()) as VideoDto;
+
+        setData(response.data);
+      } catch {
+      } finally {
+        setLoading(false);
+      }
+    })();
+  }, [videoId]);
+
   return (
     <div className={styles.container}>
       <iframe

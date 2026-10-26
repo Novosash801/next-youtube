@@ -1,4 +1,3 @@
-
 type OEmbedVideoInfo = {
   title: string;
   author_name: string;
@@ -27,7 +26,8 @@ const videoIds: Set<string> = new Set<string>([
   "hT_nvWreIhg",
 ]);
 
-export async function GET() {
+export async function GET(request: Request) {
+  console.log("url", request.url);
   const promisesVideo = Array.from(videoIds).map(async (videoId) => {
     try {
       const res = await fetch(
