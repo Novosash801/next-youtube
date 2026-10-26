@@ -88,6 +88,7 @@
 }
 
 .channelNameLink {
+  align-self: flex-start;
   overflow: hidden;
   font-size: 13px;
   color: #aaa;
@@ -97,12 +98,19 @@
 
 .placeholder {
   display: flex;
+  flex-direction: column;
+  gap: 10px;
   align-items: center;
   justify-content: center;
   width: 100%;
   aspect-ratio: 16 / 9;
-  color: #aaa;
+  color: #ffffff;
   text-align: center;
   background-color: #272727;
   border-radius: 12px;
+}
+
+.errorIcon {
+  width: 278px;
+  height: auto;
 }

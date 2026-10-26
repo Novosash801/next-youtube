@@ -1,4 +1,4 @@
-import VideoScreen from "@/screen/VideoPage";
+import VideoScreen from "@/page/VideoPage";
 
 type VideoPageProps = {
   params: Promise<{ videoId: string }>;

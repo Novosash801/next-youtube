@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
+import UnavailableVideo from "@/shared/assets/img/unavailable_video.png"
+
 import styles from "./HomePage.module.css";
 
 type VideoThumbnailProps = {
@@ -11,13 +13,19 @@ type VideoThumbnailProps = {
   authorName: string | null;
 };
 
-const VideoThumbnail = ({ videoId, title, authorName }: VideoThumbnailProps) => {
+const VideoThumbnail = ({
+  videoId,
+  title,
+  authorName,
+}: VideoThumbnailProps) => {
   const [hasError, setHasError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string>("");
 
   if (hasError) {
     return (
       <div className={styles.placeholder}>
-        <span>Видео недоступно</span>
+        <Image className={styles.errorIcon} src={UnavailableVideo} alt="" />
+        <b>Видео недоступно</b>
       </div>
     );
   }
@@ -30,21 +38,25 @@ const VideoThumbnail = ({ videoId, title, authorName }: VideoThumbnailProps) => 
           className={styles.videoImage}
           src={`https://img.youtube.com/vi/${videoId}/hqdefault.jpg`}
           alt="Видео с youtube"
-          onError={() => setHasError(true)}
+          onError={() => {
+            setHasError(true);
+            setErrorMessage(videoId);
+          }}
         />
       </Link>
 
       <div className={styles.videoInfoContainer}>
         <Link href="/channel" className={styles.channelImage}>
-          <p className={styles.hiddenText}>
+          <div className={styles.hiddenText}>
             {authorName ?? "Название канала"}
-          </p>
+          </div>
         </Link>
 
         <div className={styles.videoInfo}>
           <Link href={`/video/${videoId}`} className={styles.videoTitleLink}>
-            {title ?? "Название видео"}
+            <b>{title ?? "Название видео"}</b>
           </Link>
+
           <Link href="/channel" className={styles.channelNameLink}>
             {authorName ?? "Название канала"}
           </Link>

@@ -1,5 +1,4 @@
-
-import HomePage from "@/screen/HomePage";
+import HomePage from "@/page/HomePage";
 
 const page = () => {
   return (

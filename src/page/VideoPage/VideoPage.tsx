@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import styles from "./VideoScreen.module.css";
+import styles from "./VideoPage.module.css";
 
 type VideoScreenProps = {
   videoId: string;
