@@ -3,7 +3,8 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-import UnavailableVideo from "@/shared/assets/img/unavailable_video.png"
+import UnavailableVideo from "@/shared/assets/img/unavailable_video.png";
+import { AllVideosDto } from "@/shared/types/serverTypes";
 
 import styles from "./HomePage.module.css";
 
@@ -81,7 +82,7 @@ const HomePage = () => {
     (async () => {
       try {
         const serverData = await fetch("/api/videos");
-        const response = await serverData.json();
+        const response = (await serverData.json()) as AllVideosDto;
 
         setData(response.data);
       } catch {

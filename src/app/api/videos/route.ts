@@ -1,4 +1,20 @@
-const videosData: Set<string> = new Set<string>([
+
+type OEmbedVideoInfo = {
+  title: string;
+  author_name: string;
+  author_url: string;
+  type: string;
+  height: number;
+  width: number;
+  version: string;
+  provider_name: string;
+  provider_url: string;
+  thumbnail_height: number;
+  thumbnail_width: number;
+  thumbnail_url: string;
+};
+
+const videoIds: Set<string> = new Set<string>([
   "Cj3ENSVogTo",
   "2g811Eo7K8U",
   "dQw4w9WgXcQ",
@@ -12,40 +28,44 @@ const videosData: Set<string> = new Set<string>([
 ]);
 
 export async function GET() {
-  const data = await Promise.all(
-    Array.from(videosData).map(async (videoId) => {
-      try {
-        const res = await fetch(
-          `https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${videoId}&format=json`,
-        );
+  const promisesVideo = Array.from(videoIds).map(async (videoId) => {
+    try {
+      const res = await fetch(
+        `https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${videoId}&format=json`,
+      );
 
-        if (!res.ok) {
-          return { videoId, title: null, authorName: null };
-        }
-
-        const { title, author_name: authorName } = await res.json();
-
-        return { videoId, title, authorName };
-      } catch {
+      if (!res.ok) {
         return { videoId, title: null, authorName: null };
       }
-    }),
-  );
 
-  return Response.json({ ok: true, data });
+      const {
+        title,
+        author_name: authorName,
+        author_url: authorUrl,
+      } = (await res.json()) as OEmbedVideoInfo;
+
+      return { videoId, title, authorName, authorUrl };
+    } catch {
+      return { videoId, title: null, authorName: null };
+    }
+  });
+
+  const videos = await Promise.all(promisesVideo);
+  console.log("videos", videos);
+  return Response.json({ ok: true, data: videos });
 }
 
 export async function POST(request: Request) {
   const { videoId } = await request.json();
 
-  if (videosData.has(videoId)) {
+  if (videoIds.has(videoId)) {
     return Response.json(
       { ok: false, error: "Видео уже добавлено" },
       { status: 400 },
     );
   }
 
-  videosData.add(videoId);
+  videoIds.add(videoId);
 
   return Response.json({ ok: true });
 }
