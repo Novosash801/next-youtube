@@ -18,10 +18,12 @@ const VideoScreen = ({ videoId }: VideoScreenProps) => {
         const serverData = await fetch(`/api/videos?videoId=${videoId}`);
         const response = (await serverData.json()) as VideoDto;
 
+        console.log("response", response);
+
         setData(response.data);
       } catch {
       } finally {
-        setLoading(false);
+        // setLoading(false);
       }
     })();
   }, [videoId]);

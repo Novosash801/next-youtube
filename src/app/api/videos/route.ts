@@ -26,36 +26,38 @@ const videoIds: Set<string> = new Set<string>([
   "hT_nvWreIhg",
 ]);
 
+async function fetchVideoInfo(videoId: string) {
+  try {
+    const res = await fetch(
+      `https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${videoId}&format=json`,
+    );
+
+    if (!res.ok) {
+      return { videoId, title: null, authorName: null, authorUrl: null };
+    }
+
+    const data: OEmbedVideoInfo = await res.json();
+    return {
+      videoId,
+      title: data.title,
+      authorName: data.author_name,
+      authorUrl: data.author_url,
+    };
+  } catch (error) {
+    console.error(`oEmbed fetch failed for ${videoId}`, error);
+    return { videoId, title: null, authorName: null, authorUrl: null };
+  }
+}
+
 export async function GET(request: Request) {
   const urlObject = new URL(request.url);
   const videoId = urlObject.searchParams.get("videoId");
 
   console.log("videoId", videoId);
 
-  const promisesVideo = Array.from(videoIds).map(async (videoId) => {
-    try {
-      const data = await fetch(
-        `https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${videoId}&format=json`,
-      );
+  const promisesVideos = Array.from(videoIds).map(fetchVideoInfo);
+  const videos = await Promise.all(promisesVideos);
 
-      if (!data.ok) {
-        return { videoId, title: null, authorName: null };
-      }
-
-      const res = await data.json();
-
-      return {
-        videoId,
-        title: res.title,
-        authorName: res.author_name,
-        authorUrl: res.author_url,
-      };
-    } catch {
-      return { videoId, title: null, authorName: null };
-    }
-  });
-
-  const videos = await Promise.all(promisesVideo);
   return Response.json({ ok: true, data: videos });
 }
 
