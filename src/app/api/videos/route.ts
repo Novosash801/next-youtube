@@ -37,12 +37,12 @@ async function fetchVideoInfo(videoId: string) {
     }
 
     const data: OEmbedVideoInfo = await res.json();
-    
+
     return {
       videoId,
       title: data.title,
       authorName: data.author_name,
-      authorUrl: data.author_url,
+      authorUrl: data.author_url.split("/").at(-1),
     };
   } catch (error) {
     console.error(`oEmbed fetch failed for ${videoId}`, error);

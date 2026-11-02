@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 
 import {
@@ -16,6 +16,9 @@ type VideoScreenProps = {
 };
 
 const VideoScreen = ({ videoId }: VideoScreenProps) => {
+  const [isLoading, setLoading] = useState(true);
+  const [video, setVideo] = useState<GetOneVideoDto["data"] | null>(null);
+
   useEffect(() => {
     (async () => {
       try {
@@ -24,13 +27,20 @@ const VideoScreen = ({ videoId }: VideoScreenProps) => {
 
         console.log("response", response);
 
-        // setData(response.data);
-      } catch {
+        if (response.data) {
+          setVideo(response.data);
+        }
+      } catch (e) {
+        console.error(e);
       } finally {
-        // setLoading(false);
+        setLoading(false);
       }
     })();
   }, [videoId]);
+
+  if (isLoading) {
+    return <div>Загрузка...</div>;
+  }
 
   return (
     <div className={styles.container}>
@@ -47,15 +57,21 @@ const VideoScreen = ({ videoId }: VideoScreenProps) => {
         frameBorder={0}
       />
 
-      <b className={styles.videoTitle}>НАЗВАНИЕ ВИДЕО</b>
+      <b className={styles.videoTitle}>{video?.title}</b>
 
       <div className={styles.videoInfoContainer}>
-        <Link href="/channel" className={styles.channelImage}>
-          <div className={styles.hiddenText}></div>
+        <Link
+          href={`/profile/${video?.authorUrl}`}
+          className={styles.channelImage}
+        >
+          <div className={styles.hiddenText}>{video?.authorName}</div>
         </Link>
 
-        <Link href="/" className={styles.channelNameLink}>
-          НАЗВАНИЕ ВИДЕО
+        <Link
+          href={`/profile/${video?.authorUrl}`}
+          className={styles.channelNameLink}
+        >
+          {video?.authorName}
         </Link>
       </div>
     </div>

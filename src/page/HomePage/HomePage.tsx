@@ -52,7 +52,10 @@ const VideoThumbnail = ({
       </Link>
 
       <div className={styles.videoInfoContainer}>
-        <Link href={`${authorUrl}`} className={styles.channelImage}>
+        <Link
+          href={`/profile/${authorUrl}`}
+          className={styles.channelImage}
+        >
           <div className={styles.hiddenText}>
             {authorName ?? "Название канала"}
           </div>
@@ -63,7 +66,10 @@ const VideoThumbnail = ({
             <b>{title ?? "Название видео"}</b>
           </Link>
 
-          <Link href={`${authorUrl}`} className={styles.channelNameLink}>
+          <Link
+            href={`/profile/${authorUrl}`}
+            className={styles.channelNameLink}
+          >
             {authorName ?? "Название канала"}
           </Link>
         </div>
