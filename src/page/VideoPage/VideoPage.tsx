@@ -3,7 +3,11 @@
 import { useEffect } from "react";
 import Link from "next/link";
 
-import { AllVideosDto, VideoDto } from "@/shared/types/serverTypes";
+import {
+  GetAllVideosDto,
+  GetOneVideoDto,
+  VideoDto,
+} from "@/shared/types/serverTypes";
 
 import styles from "./VideoPage.module.css";
 
@@ -16,11 +20,11 @@ const VideoScreen = ({ videoId }: VideoScreenProps) => {
     (async () => {
       try {
         const serverData = await fetch(`/api/videos?videoId=${videoId}`);
-        const response = (await serverData.json()) as VideoDto;
+        const response = (await serverData.json()) as GetOneVideoDto;
 
         console.log("response", response);
 
-        setData(response.data);
+        // setData(response.data);
       } catch {
       } finally {
         // setLoading(false);

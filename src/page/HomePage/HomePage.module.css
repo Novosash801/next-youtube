@@ -109,6 +109,16 @@
   background-color: #272727;
   border-radius: 12px;
   padding: 12px;
+
+  &:hover {
+    background-color: #fff;
+    color: #000;
+  }
+}
+
+.placeholderLink {
+  display: flex;
+  flex-direction: column;
 }
 
 .errorIcon {

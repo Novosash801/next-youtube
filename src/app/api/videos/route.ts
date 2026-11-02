@@ -37,6 +37,7 @@ async function fetchVideoInfo(videoId: string) {
     }
 
     const data: OEmbedVideoInfo = await res.json();
+    
     return {
       videoId,
       title: data.title,
@@ -53,7 +54,17 @@ export async function GET(request: Request) {
   const urlObject = new URL(request.url);
   const videoId = urlObject.searchParams.get("videoId");
 
-  console.log("videoId", videoId);
+  if (videoId) {
+    if (!videoIds.has(videoId)) {
+      return Response.json(
+        { ok: false, error: "Видео не найдено" },
+        { status: 404 },
+      );
+    }
+
+    const video = await fetchVideoInfo(videoId);
+    return Response.json({ ok: true, data: video });
+  }
 
   const promisesVideos = Array.from(videoIds).map(fetchVideoInfo);
   const videos = await Promise.all(promisesVideos);

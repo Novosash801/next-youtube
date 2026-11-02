@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import UnavailableVideo from "@/shared/assets/img/unavailable_video.png";
-import { AllVideosDto } from "@/shared/types/serverTypes";
+import { GetAllVideosDto } from "@/shared/types/serverTypes";
 
 import styles from "./HomePage.module.css";
 
@@ -27,8 +27,11 @@ const VideoThumbnail = ({
   if (hasError) {
     return (
       <div className={styles.placeholder}>
-        <Image className={styles.errorIcon} src={UnavailableVideo} alt="" />
-        <b>Видео недоступно</b>
+        <Link href="/not-found" className={styles.placeholderLink}>
+          <Image className={styles.errorIcon} src={UnavailableVideo} alt="" />
+          <b>Видео недоступно</b>
+          <b>ID: {errorMessage}</b>
+        </Link>
       </div>
     );
   }
@@ -60,10 +63,7 @@ const VideoThumbnail = ({
             <b>{title ?? "Название видео"}</b>
           </Link>
 
-          <Link
-            href={`${authorUrl}`}
-            className={styles.channelNameLink}
-          >
+          <Link href={`${authorUrl}`} className={styles.channelNameLink}>
             {authorName ?? "Название канала"}
           </Link>
         </div>
@@ -81,13 +81,13 @@ type VideoData = {
 
 const HomePage = () => {
   const [isLoading, setLoading] = useState(true);
-  const [data, setData] = useState<AllVideosDto["data"] | null>(null);
+  const [data, setData] = useState<GetAllVideosDto["data"] | null>(null);
 
   useEffect(() => {
     (async () => {
       try {
         const serverData = await fetch("/api/videos");
-        const response = (await serverData.json()) as AllVideosDto;
+        const response = (await serverData.json()) as GetAllVideosDto;
 
         setData(response.data);
       } catch {
