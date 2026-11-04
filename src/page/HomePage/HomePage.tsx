@@ -52,10 +52,7 @@ const VideoThumbnail = ({
       </Link>
 
       <div className={styles.videoInfoContainer}>
-        <Link
-          href={`/profile/${authorUrl}`}
-          className={styles.channelImage}
-        >
+        <Link href={`/profile/${authorUrl}`} className={styles.channelImage}>
           <div className={styles.hiddenText}>
             {authorName ?? "Название канала"}
           </div>
@@ -85,31 +82,21 @@ type VideoData = {
   authorName: string | null;
 };
 
-const HomePage = () => {
-  const [isLoading, setLoading] = useState(true);
-  const [data, setData] = useState<GetAllVideosDto["data"] | null>(null);
+type HomePageProp = {
+  data: GetAllVideosDto["data"];
+};
 
-  useEffect(() => {
-    (async () => {
-      try {
-        const serverData = await fetch("/api/videos");
-        const response = (await serverData.json()) as GetAllVideosDto;
+const HomePage = ({ data }: GetAllVideosDto) => {
+  // const [isLoading, setLoading] = useState(true);
+  // const [data, setData] = useState<GetAllVideosDto["data"] | null>(null);
 
-        setData(response.data);
-      } catch {
-      } finally {
-        setLoading(false);
-      }
-    })();
-  }, []);
-
-  if (isLoading) {
-    return <div>Загрузка...</div>;
-  }
+  // if (isLoading) {
+  //   return <div>Загрузка...</div>;
+  // }
 
   return (
     <div className={styles.container}>
-      {data && data.length > 0 ? (
+      {/* {data && data.length > 0 ? (
         data.map(({ videoId, title, authorName, authorUrl }) => (
           <VideoThumbnail
             videoId={videoId}
@@ -121,7 +108,7 @@ const HomePage = () => {
         ))
       ) : (
         <div>Нет видео</div>
-      )}
+      )} */}
     </div>
   );
 };

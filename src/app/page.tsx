@@ -1,11 +1,10 @@
 import HomePage from "@/page/HomePage";
+import { getVideos } from "@/shared/server/videos";
 
-const page = () => {
-  return (
-    <div>
-      <HomePage />
-    </div>
-  );
+const Home = async () => {
+  const data = await getVideos();
+
+  return <HomePage data={data} />;
 };
 
-export default page;
+export default Home;
