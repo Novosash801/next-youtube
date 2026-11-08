@@ -8,7 +8,7 @@ const Home = async () => {
 
   return (
     <Suspense fallback={<div>Загрузка...</div>}>
-      <HomePage data={data} />;
+      <HomePage data={data} />
     </Suspense>
   );
 };

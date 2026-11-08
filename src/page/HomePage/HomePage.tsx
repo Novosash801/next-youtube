@@ -88,7 +88,6 @@ const VideoThumbnail = ({
 };
 
 const HomePage = ({ data }: HomePageProp) => {
-  console.log("data", data);
 
   return (
     <div className={styles.container}>

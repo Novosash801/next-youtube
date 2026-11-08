@@ -1,1 +1,1 @@
-export { default } from "./VideoPage";
+export { default } from "./VideoScreen";
