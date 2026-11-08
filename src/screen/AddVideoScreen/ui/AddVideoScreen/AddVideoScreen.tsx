@@ -43,7 +43,7 @@ const schema = z.object({
 
 // type Schema = z.infer<typeof schema>;
 
-const AddVideoPage = () => {
+const AddVideoScreen = () => {
   const [videoId, setVideoId] = useState("");
 
   const {
@@ -110,4 +110,4 @@ const AddVideoPage = () => {
   );
 };
 
-export default AddVideoPage;
+export default AddVideoScreen;

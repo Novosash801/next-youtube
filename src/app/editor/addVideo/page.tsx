@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 
-import AddVideoPage from "@/page/AddVideoPage";
+import AddVideoScreen from "@/screen/AddVideoScreen/ui";
 
 export const metadata: Metadata = {
   title: "Добавить видео",
@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 function addVideoPage() {
   return (
     <div>
-      <AddVideoPage />
+      <AddVideoScreen />
     </div>
   );
 }
