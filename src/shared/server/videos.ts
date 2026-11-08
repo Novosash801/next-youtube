@@ -42,7 +42,7 @@ async function fetchVideoInfo(videoId: string) {
       videoId,
       title: data.title,
       authorName: data.author_name,
-      authorUrl: data.author_url.split("/").at(-1),
+      authorUrl: data.author_url.split("/").at(-1) ?? null,
     };
   } catch (error) {
     console.error(`oEmbed fetch failed for ${videoId}`, error);

@@ -15,6 +15,16 @@ type VideoThumbnailProps = {
   authorUrl: string | null;
 };
 
+type VideoData = {
+  videoId: string;
+  title: string | null;
+  authorName: string | null;
+};
+
+type HomePageProp = {
+  data: GetAllVideosDto["data"];
+};
+
 const VideoThumbnail = ({
   videoId,
   title,
@@ -48,6 +58,7 @@ const VideoThumbnail = ({
             setHasError(true);
             setErrorMessage(videoId);
           }}
+          unoptimized
         />
       </Link>
 
@@ -76,27 +87,12 @@ const VideoThumbnail = ({
   );
 };
 
-type VideoData = {
-  videoId: string;
-  title: string | null;
-  authorName: string | null;
-};
-
-type HomePageProp = {
-  data: GetAllVideosDto["data"];
-};
-
-const HomePage = ({ data }: GetAllVideosDto) => {
-  // const [isLoading, setLoading] = useState(true);
-  // const [data, setData] = useState<GetAllVideosDto["data"] | null>(null);
-
-  // if (isLoading) {
-  //   return <div>Загрузка...</div>;
-  // }
+const HomePage = ({ data }: HomePageProp) => {
+  console.log("data", data);
 
   return (
     <div className={styles.container}>
-      {/* {data && data.length > 0 ? (
+      {data && data.length > 0 ? (
         data.map(({ videoId, title, authorName, authorUrl }) => (
           <VideoThumbnail
             videoId={videoId}
@@ -108,7 +104,7 @@ const HomePage = ({ data }: GetAllVideosDto) => {
         ))
       ) : (
         <div>Нет видео</div>
-      )} */}
+      )}
     </div>
   );
 };
