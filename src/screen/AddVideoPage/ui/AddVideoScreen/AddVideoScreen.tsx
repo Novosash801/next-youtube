@@ -7,7 +7,7 @@ import * as z from "zod";
 
 import { isAllowedHost, parseYouTube, YOUTUBE_DOMAINS } from "@/shared/libs";
 
-import styles from "./AddVideoPage.module.css";
+import styles from "./AddVideoScreen.module.css";
 
 type Inputs = {
   videoUrl: string;
@@ -65,11 +65,6 @@ const AddVideoPage = () => {
       method: "POST",
       body: JSON.stringify({ videoId }),
     });
-
-    const res = await fetch("/api/videos");
-    const videos = await res.json();
-
-
   };
 
   const urlErrorMessage = errors.videoUrl?.message;

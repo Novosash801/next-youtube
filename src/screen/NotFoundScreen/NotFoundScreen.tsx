@@ -4,7 +4,7 @@ import Link from "next/link";
 import Logo from "@/shared/assets/icons/youtube-icon.svg";
 import NotFoundImage from "@/shared/assets/img/monkey.png";
 
-import styles from "./NotFoundPage.module.css";
+import styles from "./NotFoundScreen.module.css";
 
 const NotFoundPage = () => {
   return (

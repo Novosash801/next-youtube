@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import { notFound } from "next/navigation";
 
-import VideoScreen from "@/page/VideoPage";
+import VideoScreen from "@/screen/VideoScreen";
 import { getVideoById } from "@/shared/server/videos";
 
 type VideoPageProps = {

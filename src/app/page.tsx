@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 
-import HomePage from "@/page/HomePage";
+import HomePage from "@/screen/HomeScreen";
 import { getVideos } from "@/shared/server/videos";
 
 const Home = async () => {

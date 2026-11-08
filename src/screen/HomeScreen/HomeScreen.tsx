@@ -1,12 +1,12 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
 import UnavailableVideo from "@/shared/assets/img/unavailable_video.png";
 import { GetAllVideosDto } from "@/shared/types/serverTypes";
 
-import styles from "./HomePage.module.css";
+import styles from "./HomeScreen.module.css";
 
 type VideoThumbnailProps = {
   videoId: string;
@@ -88,7 +88,6 @@ const VideoThumbnail = ({
 };
 
 const HomePage = ({ data }: HomePageProp) => {
-
   return (
     <div className={styles.container}>
       {data && data.length > 0 ? (

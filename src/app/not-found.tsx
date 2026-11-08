@@ -1,4 +1,4 @@
-import NotFoundPage from "../page/NotFoundPage";
+import NotFoundPage from "../screen/NotFoundScreen";
 
 const NotFound = () => {
   return (
