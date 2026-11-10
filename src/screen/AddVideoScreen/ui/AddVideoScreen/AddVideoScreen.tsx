@@ -5,12 +5,12 @@ import { useAddVideoForm } from "@/screen/AddVideoScreen/lib/useAddVideoForm";
 import styles from "./AddVideoScreen.module.css";
 
 const CATEGORIES = [
-  { id: 1, title: "Игры" },
-  { id: 2, title: "Новости" },
-  { id: 3, title: "Юмор" },
-  { id: 4, title: "Наука" },
-  { id: 5, title: "Спорт" },
-  { id: 6, title: "Природа" },
+  { id: 'games', title: "Игры" },
+  { id: 'news', title: "Новости" },
+  { id: 'humor', title: "Юмор" },
+  { id: 'science', title: "Наука" },
+  { id: 'sport', title: "Спорт" },
+  { id: 'nature', title: "Природа" },
 ];
 
 const AddVideoScreen = () => {
@@ -23,7 +23,7 @@ const AddVideoScreen = () => {
       <form className={styles.form} onSubmit={onSubmit}>
         <select {...register("videoCategory")}>
           {CATEGORIES.map((category, index) => (
-            <option value={category.title} key={category.id}>
+            <option value={category.id} key={category.id}>
               {category.title}
             </option>
           ))}

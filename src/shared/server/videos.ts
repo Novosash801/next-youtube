@@ -13,60 +13,84 @@ type OEmbedVideoInfo = {
   thumbnail_url: string;
 };
 
-const videoIds: Set<string> = new Set<string>([
-  "7ZhdXgRfxHI",
-  "2g811Eo7K8U",
-  "dQw4w9WgXcQ",
-  "3JZ_D3ELwOQ",
-  "L_jWHffIx5E",
-  "eY52Zsg-KVI",
-  "kJQP7kiw5Fk",
-  "fRh_vgS2dFE",
-  "RgKAFK5djSk",
-  "hT_nvWreIhg",
+type VideoDataContent = {
+  id: string;
+  categoryId: string;
+};
+
+const videosData = new Map<string, VideoDataContent>([
+  ["7ZhdXgRfxHI", { id: "7ZhdXgRfxHI", categoryId: "nature" }],
+  ["2g811Eo7K8U", { id: "2g811Eo7K8U", categoryId: "games" }],
+  ["dQw4w9WgXcQ", { id: "dQw4w9WgXcQ", categoryId: "science" }],
+  ["3JZ_D3ELwOQ", { id: "3JZ_D3ELwOQ", categoryId: "sport" }],
+  ["L_jWHffIx5E", { id: "L_jWHffIx5E", categoryId: "sport" }],
+  ["eY52Zsg-KVI", { id: "eY52Zsg-KVI", categoryId: "humor" }],
+  ["kJQP7kiw5Fk", { id: "kJQP7kiw5Fk", categoryId: "humor" }],
+  ["fRh_vgS2dFE", { id: "fRh_vgS2dFE", categoryId: "sport" }],
+  ["RgKAFK5djSk", { id: "RgKAFK5djSk", categoryId: "sport" }],
+  ["hT_nvWreIhg", { id: "hT_nvWreIhg", categoryId: "news" }],
 ]);
 
-async function fetchVideoInfo(videoId: string) {
+async function fetchVideoInfo(videoId: string, categoryId: string) {
   try {
     const res = await fetch(
       `https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${videoId}&format=json`,
     );
 
     if (!res.ok) {
-      return { videoId, title: null, authorName: null, authorUrl: null };
+      return {
+        videoId,
+        categoryId,
+        title: null,
+        authorName: null,
+        authorUrl: null,
+      };
     }
 
     const data: OEmbedVideoInfo = await res.json();
 
     return {
       videoId,
+      categoryId,
       title: data.title,
       authorName: data.author_name,
       authorUrl: data.author_url.split("/").at(-1) ?? null,
     };
   } catch (error) {
     console.error(`oEmbed fetch failed for ${videoId}`, error);
-    return { videoId, title: null, authorName: null, authorUrl: null };
+    return {
+      videoId,
+      categoryId,
+      title: null,
+      authorName: null,
+      authorUrl: null,
+    };
   }
 }
 
 export async function getVideos() {
-  return Promise.all(Array.from(videoIds).map(fetchVideoInfo));
+  return Promise.all(
+    Array.from(videosData.values()).map(({ id, categoryId }) =>
+      fetchVideoInfo(id, categoryId),
+    ),
+  );
 }
 
 export async function getVideoById(videoId: string) {
-  if (!videoIds.has(videoId)) {
+  const videoData = videosData.get(videoId);
+
+  if (!videoData) {
     return null;
   }
 
-  return fetchVideoInfo(videoId);
+  return fetchVideoInfo(videoData.id, videoData.categoryId);
 }
 
-export function addVideo(videoId: string) {
-  if (videoIds.has(videoId)) {
+export function addVideo(videoId: string, categoryId: string) {
+  if (videosData.has(videoId)) {
     return false;
   }
 
-  videoIds.add(videoId);
+  videosData.set(videoId, { id: videoId, categoryId });
   return true;
 }

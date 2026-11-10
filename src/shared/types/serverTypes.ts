@@ -1,5 +1,6 @@
 export type VideoDto = {
   videoId: string;
+  categoryId: string;
   title: string | null;
   authorName: string | null;
   authorUrl: string | null;

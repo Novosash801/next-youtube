@@ -22,7 +22,7 @@ export async function GET(request: Request) {
 }
 
 export async function POST(request: Request) {
-  const { videoId } = await request.json();
+  const { videoId, categoryId } = await request.json();
 
   if (typeof videoId !== "string" || videoId.length === 0) {
     return Response.json(
@@ -31,7 +31,14 @@ export async function POST(request: Request) {
     );
   }
 
-  if (!addVideo(videoId)) {
+  if (typeof categoryId !== "string" || categoryId.length === 0) {
+    return Response.json(
+      { ok: false, error: "Некорректная категория видео" },
+      { status: 400 },
+    );
+  }
+
+  if (!addVideo(videoId, categoryId)) {
     return Response.json(
       { ok: false, error: "Видео уже добавлено" },
       { status: 400 },
