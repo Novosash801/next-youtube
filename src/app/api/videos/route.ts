@@ -18,7 +18,7 @@ export async function GET(request: Request) {
   }
 
   const videos = await getVideos();
-  return Response.json({ ok: true, data: videos });
+  return Response.json({ ok: true, data: videos, categories: videos });
 }
 
 export async function POST(request: Request) {

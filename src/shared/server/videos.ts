@@ -33,6 +33,8 @@ const videosData = new Map<string, VideoDataContent>([
 
 async function fetchVideoInfo(videoId: string, categoryId: string) {
   try {
+    const categories: string[] = [];
+
     const res = await fetch(
       `https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${videoId}&format=json`,
     );
@@ -48,6 +50,10 @@ async function fetchVideoInfo(videoId: string, categoryId: string) {
     }
 
     const data: OEmbedVideoInfo = await res.json();
+
+    if (!categories.includes(categoryId)) {
+      categories.push(categoryId);
+    }
 
     return {
       videoId,

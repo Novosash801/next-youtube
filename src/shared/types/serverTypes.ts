@@ -7,12 +7,12 @@ export type VideoDto = {
 };
 
 export type GetOneVideoDto = {
-  ok: boolean,
-  data: VideoDto | null
-}
+  ok: boolean;
+  data: VideoDto | null;
+};
 
 export type GetAllVideosDto = {
-   ok: boolean;
+  ok: boolean;
   data: VideoDto[];
- 
+  categories: string[];
 };
