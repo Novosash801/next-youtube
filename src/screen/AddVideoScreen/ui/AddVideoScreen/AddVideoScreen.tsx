@@ -1,17 +1,9 @@
 "use client";
 
 import { useAddVideoForm } from "@/screen/AddVideoScreen/lib/useAddVideoForm";
+import { VIDEO_CATEGORIES } from "@/shared/constants/videoCategories";
 
 import styles from "./AddVideoScreen.module.css";
-
-const CATEGORIES = [
-  { id: 'games', title: "Игры" },
-  { id: 'news', title: "Новости" },
-  { id: 'humor', title: "Юмор" },
-  { id: 'science', title: "Наука" },
-  { id: 'sport', title: "Спорт" },
-  { id: 'nature', title: "Природа" },
-];
 
 const AddVideoScreen = () => {
   const { register, onSubmit, errors, videoId, setVideoId } = useAddVideoForm();
@@ -22,7 +14,7 @@ const AddVideoScreen = () => {
     <div className={styles.container}>
       <form className={styles.form} onSubmit={onSubmit}>
         <select {...register("videoCategory")}>
-          {CATEGORIES.map((category, index) => (
+          {VIDEO_CATEGORIES.map((category) => (
             <option value={category.id} key={category.id}>
               {category.title}
             </option>

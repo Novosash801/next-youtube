@@ -4,13 +4,14 @@ import Image from "next/image";
 import Link from "next/link";
 
 import UnavailableVideo from "@/shared/assets/img/unavailable_video.png";
+import { VIDEO_CATEGORIES } from "@/shared/constants/videoCategories";
 import { GetAllVideosDto } from "@/shared/types/serverTypes";
 
 import styles from "./HomeScreen.module.css";
 
 type HomeScreenProps = {
   videos: GetAllVideosDto["videos"];
-  categories: GetAllVideosDto["categories"];
+  categories: typeof VIDEO_CATEGORIES;
 };
 
 const HomeScreen = ({ videos, categories }: HomeScreenProps) => {
@@ -21,11 +22,11 @@ const HomeScreen = ({ videos, categories }: HomeScreenProps) => {
           categories.length > 0 &&
           categories.map((category) => (
             <Link
-              href={`/${category}`}
-              key={category}
+              href={`/${category.id}`}
+              key={category.id}
               className={styles.categoryLink}
             >
-              {category}
+              {category.title}
             </Link>
           ))}
       </div>
