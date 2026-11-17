@@ -1,3 +1,5 @@
+import { revalidatePath } from "next/cache";
+
 import { addVideo, getVideoById, getVideos } from "@/shared/server/videos";
 
 export async function GET(request: Request) {
@@ -38,12 +40,14 @@ export async function POST(request: Request) {
     );
   }
 
-  if (!addVideo(videoId, categoryId)) {
+  if (!(await addVideo(videoId, categoryId))) {
     return Response.json(
       { ok: false, error: "Видео уже добавлено" },
       { status: 400 },
     );
   }
+
+  revalidatePath("/");
 
   return Response.json({ ok: true });
 }

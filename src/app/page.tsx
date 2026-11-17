@@ -6,6 +6,8 @@ import { getVideos } from "@/shared/server/videos";
 const Home = async () => {
   const data = await getVideos();
 
+  console.log("data", data);
+
   return (
     <Suspense fallback={<div>Загрузка...</div>}>
       <HomePage data={data} />
