@@ -16,9 +16,20 @@ type HomeScreenProps = {
 const HomeScreen = ({ videos, categories }: HomeScreenProps) => {
   return (
     <div className={styles.container}>
-      {categories &&
-        categories.length > 0 &&
-        categories.map((category) => <div key={category}>{category}</div>)}
+      <div className={styles.categoriesContainer}>
+        {categories &&
+          categories.length > 0 &&
+          categories.map((category) => (
+            <Link
+              href={`/${category}`}
+              key={category}
+              className={styles.categoryLink}
+            >
+              {category}
+            </Link>
+          ))}
+      </div>
+
       <div className={styles.videoGrid}>
         {videos && videos.length > 0 ? (
           videos.map(({ videoId, title, authorName, authorUrl }) => (

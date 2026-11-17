@@ -2,6 +2,21 @@
   padding-bottom: 32px;
 }
 
+.categoriesContainer {
+  display: flex;
+  gap: 10px;
+}
+
+.categoryLink {
+  border: 1px solid white;
+  border-radius: 12px;
+  padding: 8px 16px;
+
+  &:hover {
+    background-color: #342a28;
+  }
+}
+
 .videoGrid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));

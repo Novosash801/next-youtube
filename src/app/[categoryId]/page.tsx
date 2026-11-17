@@ -5,5 +5,5 @@ type CategoryIdPageProps = {
 export default async function CategoryIdPage({ params }: CategoryIdPageProps) {
   const { categoryId } = await params;
 
-  return <div>Категории: {categoryId}</div>;
+  return <div>Видео с категорией {categoryId}</div>;
 }
