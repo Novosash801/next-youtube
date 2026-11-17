@@ -6,10 +6,10 @@ import styles from "./AddVideoScreen.module.css";
 
 const CATEGORIES = [
   { id: 'games', title: "Игры" },
-  { id: 'news', title: "Новости" },
+  { id: 'movie', title: "Кино" },
   { id: 'humor', title: "Юмор" },
   { id: 'science', title: "Наука" },
-  { id: 'sport', title: "Спорт" },
+  { id: 'music', title: "Музыка" },
   { id: 'nature', title: "Природа" },
 ];
 

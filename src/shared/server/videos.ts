@@ -21,65 +21,26 @@ type VideoDataContent = {
 const videosData = new Map<string, VideoDataContent>([
   ["7ZhdXgRfxHI", { id: "7ZhdXgRfxHI", categoryId: "nature" }],
   ["2g811Eo7K8U", { id: "2g811Eo7K8U", categoryId: "games" }],
-  ["dQw4w9WgXcQ", { id: "dQw4w9WgXcQ", categoryId: "science" }],
+  ["dQw4w9WgXcQ", { id: "dQw4w9WgXcQ", categoryId: "music" }],
   ["3JZ_D3ELwOQ", { id: "3JZ_D3ELwOQ", categoryId: "sport" }],
-  ["L_jWHffIx5E", { id: "L_jWHffIx5E", categoryId: "sport" }],
-  ["eY52Zsg-KVI", { id: "eY52Zsg-KVI", categoryId: "humor" }],
-  ["kJQP7kiw5Fk", { id: "kJQP7kiw5Fk", categoryId: "humor" }],
-  ["fRh_vgS2dFE", { id: "fRh_vgS2dFE", categoryId: "sport" }],
+  ["L_jWHffIx5E", { id: "L_jWHffIx5E", categoryId: "movie" }],
+  ["eY52Zsg-KVI", { id: "eY52Zsg-KVI", categoryId: "music" }],
+  ["kJQP7kiw5Fk", { id: "kJQP7kiw5Fk", categoryId: "music" }],
+  ["fRh_vgS2dFE", { id: "fRh_vgS2dFE", categoryId: "movie" }],
   ["RgKAFK5djSk", { id: "RgKAFK5djSk", categoryId: "sport" }],
   ["hT_nvWreIhg", { id: "hT_nvWreIhg", categoryId: "news" }],
 ]);
 
-async function fetchVideoInfo(videoId: string, categoryId: string) {
-  try {
-    const categories: string[] = [];
-
-    const res = await fetch(
-      `https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${videoId}&format=json`,
-    );
-
-    if (!res.ok) {
-      return {
-        videoId,
-        categoryId,
-        title: null,
-        authorName: null,
-        authorUrl: null,
-      };
-    }
-
-    const data: OEmbedVideoInfo = await res.json();
-
-    if (!categories.includes(categoryId)) {
-      categories.push(categoryId);
-    }
-
-    return {
-      videoId,
-      categoryId,
-      title: data.title,
-      authorName: data.author_name,
-      authorUrl: data.author_url.split("/").at(-1) ?? null,
-    };
-  } catch (error) {
-    console.error(`oEmbed fetch failed for ${videoId}`, error);
-    return {
-      videoId,
-      categoryId,
-      title: null,
-      authorName: null,
-      authorUrl: null,
-    };
-  }
-}
-
 export async function getVideos() {
-  return Promise.all(
+  const videos = await Promise.all(
     Array.from(videosData.values()).map(({ id, categoryId }) =>
       fetchVideoInfo(id, categoryId),
     ),
   );
+
+  const categories = [...new Set(videos.map((video) => video.categoryId))];
+
+  return { videos, categories };
 }
 
 export async function getVideoById(videoId: string) {
@@ -99,4 +60,41 @@ export function addVideo(videoId: string, categoryId: string) {
 
   videosData.set(videoId, { id: videoId, categoryId });
   return true;
+}
+
+async function fetchVideoInfo(videoId: string, categoryId: string) {
+  try {
+    const res = await fetch(
+      `https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${videoId}&format=json`,
+    );
+
+    if (!res.ok) {
+      return {
+        videoId,
+        categoryId,
+        title: null,
+        authorName: null,
+        authorUrl: null,
+      };
+    }
+
+    const videoInfo: OEmbedVideoInfo = await res.json();
+
+    return {
+      videoId,
+      categoryId,
+      title: videoInfo.title,
+      authorName: videoInfo.author_name,
+      authorUrl: videoInfo.author_url.split("/").at(-1) ?? null,
+    };
+  } catch (error) {
+    console.error(`oEmbed fetch failed for ${videoId}`, error);
+    return {
+      videoId,
+      categoryId,
+      title: null,
+      authorName: null,
+      authorUrl: null,
+    };
+  }
 }

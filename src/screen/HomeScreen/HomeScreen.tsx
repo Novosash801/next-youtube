@@ -3,8 +3,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-import UnavailableVideo from "@/shared/assets/img/unavailable_video.png";
-import { GetAllVideosDto } from "@/shared/types/serverTypes";
+import UnavailableVideo from "@/shared/assets/img/unavailable_video.pimporimport { GetAllVideosDto } from "@/shared/types/serverTypes";
 
 import styles from "./HomeScreen.module.css";
 
@@ -21,8 +20,46 @@ type VideoData = {
   authorName: string | null;
 };
 
-type HomePageProp = {
-  data: GetAllVideosDto["data"];
+type HomeScreenProp = {
+  vdata: GetAllVideosDto["data"];e
+};
+
+const HomeScreen = ({datas }: HomeScreenProp) => {  console.log("data", data);
+
+  return (
+    <div className={styles.container}>
+     {/*  {data.categories.length > 0 &&
+        categories.map((category, index) => {
+          return (
+            <div className="" key={index}>
+              {category}
+            </div>
+          );
+        }) */}}
+
+      <div className={styles.videoGrid}>
+        datas &&datas.length > 0 ? (
+         datas.map(({ videoId, title, authorName, authorUrl }) => (
+            <VideoThumbnail
+              videoId={videoId}
+              title={title}
+              authorName={authorName}
+              key={videoId}
+              authorUrl={authorUrl}
+            />
+          ))
+        ) : (
+          <div>Нет видео</div>
+        )}
+      </div>
+  <div>Нет видео</div>
+        )}
+      </div>
+  <div>Нет видео</div>
+        )}
+      </div>
+    </div>
+  );
 };
 
 const VideoThumbnail = ({
@@ -87,24 +124,4 @@ const VideoThumbnail = ({
   );
 };
 
-const HomePage = ({ data }: HomePageProp) => {
-  return (
-    <div className={styles.container}>
-      {data && data.length > 0 ? (
-        data.map(({ videoId, title, authorName, authorUrl }) => (
-          <VideoThumbnail
-            videoId={videoId}
-            title={title}
-            authorName={authorName}
-            key={videoId}
-            authorUrl={authorUrl}
-          />
-        ))
-      ) : (
-        <div>Нет видео</div>
-      )}
-    </div>
-  );
-};
-
-export default HomePage;
+export default HomeScreen;
