@@ -16,19 +16,24 @@ type HomeScreenProps = {
 const HomeScreen = ({ videos, categories }: HomeScreenProps) => {
   return (
     <div className={styles.container}>
-      {videos && videos.length > 0 ? (
-        videos.map(({ videoId, title, authorName, authorUrl }) => (
-          <VideoThumbnail
-            videoId={videoId}
-            title={title}
-            authorName={authorName}
-            key={videoId}
-            authorUrl={authorUrl}
-          />
-        ))
-      ) : (
-        <div>Нет видео</div>
-      )}
+      {categories &&
+        categories.length > 0 &&
+        categories.map((category) => <div key={category}>{category}</div>)}
+      <div className={styles.videoGrid}>
+        {videos && videos.length > 0 ? (
+          videos.map(({ videoId, title, authorName, authorUrl }) => (
+            <VideoThumbnail
+              videoId={videoId}
+              title={title}
+              authorName={authorName}
+              key={videoId}
+              authorUrl={authorUrl}
+            />
+          ))
+        ) : (
+          <div>Нет видео</div>
+        )}
+      </div>
     </div>
   );
 };
