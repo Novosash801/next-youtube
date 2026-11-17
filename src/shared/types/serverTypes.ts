@@ -13,6 +13,6 @@ export type GetOneVideoDto = {
 
 export type GetAllVideosDto = {
   ok: boolean;
-  data: VideoDto[];
+  videos: VideoDto[];
   categories: string[];
 };

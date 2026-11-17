@@ -1,6 +1,8 @@
 import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
+import { VideoDto } from "@/shared/types/serverTypes";
+
 type OEmbedVideoInfo = {
   title: string;
   author_name: string;
@@ -35,9 +37,13 @@ async function writeVideosData(videosData: VideoDataContent[]) {
 export async function getVideos() {
   const videosData = await readVideosData();
 
-  return Promise.all(
+  const videos = await Promise.all(
     videosData.map(({ id, categoryId }) => fetchVideoInfo(id, categoryId)),
   );
+
+  const categories = [...new Set(videos.map((video) => video.categoryId))];
+
+  return { videos, categories };
 }
 
 export async function getVideoById(videoId: string) {
@@ -63,10 +69,11 @@ export async function addVideo(videoId: string, categoryId: string) {
   return true;
 }
 
-async function fetchVideoInfo(videoId: string, categoryId: string) {
+async function fetchVideoInfo(
+  videoId: string,
+  categoryId: string,
+): Promise<VideoDto> {
   try {
-    // const categories: string[] = [];
-
     const res = await fetch(
       `https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${videoId}&format=json`,
     );
@@ -82,10 +89,6 @@ async function fetchVideoInfo(videoId: string, categoryId: string) {
     }
 
     const data: OEmbedVideoInfo = await res.json();
-
-    // if (!categories.includes(categoryId)) {
-    //   categories.push(categoryId);
-    // }
 
     return {
       videoId,

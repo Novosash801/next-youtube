@@ -1,18 +1,18 @@
 import { Suspense } from "react";
 
-import HomePage from "@/screen/HomeScreen";
+import HomeScreen from "@/screen/HomeScreen";
 import { getVideos } from "@/shared/server/videos";
 
-const Home = async () => {
-  const data = await getVideos();
+const HomePage = async () => {
+  const { videos, categories } = await getVideos();
 
-  console.log("data", data);
+  console.log(categories);
 
   return (
     <Suspense fallback={<div>Загрузка...</div>}>
-      <HomePage data={data} />
+      <HomeScreen videos={videos} categories={categories} />
     </Suspense>
   );
 };
 
-export default Home;
+export default HomePage;

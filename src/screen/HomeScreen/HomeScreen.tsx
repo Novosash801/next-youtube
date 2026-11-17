@@ -8,21 +8,36 @@ import { GetAllVideosDto } from "@/shared/types/serverTypes";
 
 import styles from "./HomeScreen.module.css";
 
+type HomeScreenProps = {
+  videos: GetAllVideosDto["videos"];
+  categories: GetAllVideosDto["categories"];
+};
+
+const HomeScreen = ({ videos, categories }: HomeScreenProps) => {
+  return (
+    <div className={styles.container}>
+      {videos && videos.length > 0 ? (
+        videos.map(({ videoId, title, authorName, authorUrl }) => (
+          <VideoThumbnail
+            videoId={videoId}
+            title={title}
+            authorName={authorName}
+            key={videoId}
+            authorUrl={authorUrl}
+          />
+        ))
+      ) : (
+        <div>Нет видео</div>
+      )}
+    </div>
+  );
+};
+
 type VideoThumbnailProps = {
   videoId: string;
   title: string | null;
   authorName: string | null;
   authorUrl: string | null;
-};
-
-type VideoData = {
-  videoId: string;
-  title: string | null;
-  authorName: string | null;
-};
-
-type HomePageProp = {
-  data: GetAllVideosDto["data"];
 };
 
 const VideoThumbnail = ({
@@ -87,24 +102,4 @@ const VideoThumbnail = ({
   );
 };
 
-const HomePage = ({ data }: HomePageProp) => {
-  return (
-    <div className={styles.container}>
-      {data && data.length > 0 ? (
-        data.map(({ videoId, title, authorName, authorUrl }) => (
-          <VideoThumbnail
-            videoId={videoId}
-            title={title}
-            authorName={authorName}
-            key={videoId}
-            authorUrl={authorUrl}
-          />
-        ))
-      ) : (
-        <div>Нет видео</div>
-      )}
-    </div>
-  );
-};
-
-export default HomePage;
+export default HomeScreen;
