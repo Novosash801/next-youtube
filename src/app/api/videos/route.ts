@@ -17,9 +17,8 @@ export async function GET(request: Request) {
     return Response.json({ ok: true, data: video });
   }
 
-  const { videos, categories } = await getVideos();
-  console.log("categories", categories);
-  return Response.json({ ok: true, data: videos, categories });
+  const videos = await getVideos();
+  return Response.json({ ok: true, data: videos, categories: videos });
 }
 
 export async function POST(request: Request) {
@@ -41,7 +40,7 @@ export async function POST(request: Request) {
 
   if (!addVideo(videoId, categoryId)) {
     return Response.json(
-      { ok: false, error: "Видео уже было добавлено" },
+      { ok: false, error: "Видео уже добавлено" },
       { status: 400 },
     );
   }
