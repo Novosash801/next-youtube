@@ -34,14 +34,20 @@ async function writeVideosData(videosData: VideoDataContent[]) {
   await writeFile(DB_PATH, JSON.stringify(videosData, null, 2));
 }
 
-export async function getVideos() {
+export async function getVideos(categoryIdParam?: string | null) {
   const videosData = await readVideosData();
 
   const videos = await Promise.all(
-    videosData.map(({ id, categoryId }) => fetchVideoInfo(id, categoryId)),
+    videosData
+      .filter(({ categoryId }) =>
+        categoryIdParam ? categoryId === categoryIdParam : true,
+      )
+      .map(({ id, categoryId }) => fetchVideoInfo(id, categoryId)),
   );
 
-  const categories = [...new Set(videos.map((video) => video.categoryId))];
+  const categories = [
+    ...new Set(videosData.map(({ categoryId }) => categoryId)),
+  ];
 
   return { videos, categories };
 }

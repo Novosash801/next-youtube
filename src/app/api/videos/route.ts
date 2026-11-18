@@ -4,10 +4,11 @@ import { addVideo, getVideoById, getVideos } from "@/shared/server/videos";
 
 export async function GET(request: Request) {
   const urlObject = new URL(request.url);
-  const videoId = urlObject.searchParams.get("videoId");
+  const videoIdParam = urlObject.searchParams.get("videoId");
+  const categoryIdParam = urlObject.searchParams.get("categoryId");
 
-  if (videoId) {
-    const video = await getVideoById(videoId);
+  if (videoIdParam) {
+    const video = await getVideoById(videoIdParam);
 
     if (!video) {
       return Response.json(
@@ -19,7 +20,7 @@ export async function GET(request: Request) {
     return Response.json({ ok: true, data: video });
   }
 
-  const { videos, categories } = await getVideos();
+  const { videos, categories } = await getVideos(categoryIdParam);
   return Response.json({ ok: true, data: videos, categories });
 }
 
