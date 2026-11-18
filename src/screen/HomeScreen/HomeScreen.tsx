@@ -11,15 +11,14 @@ import styles from "./HomeScreen.module.css";
 
 type HomeScreenProps = {
   videos: GetAllVideosDto["videos"];
-  categories?: typeof VIDEO_CATEGORIES;
+  categories: typeof VIDEO_CATEGORIES;
 };
 
 const HomeScreen = ({ videos, categories }: HomeScreenProps) => {
   return (
     <div className={styles.container}>
       <div className={styles.categoriesContainer}>
-        {categories &&
-          categories?.length > 0 &&
+        {categories?.length > 0 &&
           categories?.map((category) => (
             <Link
               href={`/${category.id}`}

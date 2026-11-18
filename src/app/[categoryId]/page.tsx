@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 
 import HomeScreen from "@/screen/HomeScreen";
+import { VIDEO_CATEGORIES } from "@/shared/constants/videoCategories";
 import { getVideos } from "@/shared/server/videos";
 
 export const metadata: Metadata = {
@@ -14,11 +15,11 @@ type CategoryIdPageProps = {
 
 export default async function CategoryIdPage({ params }: CategoryIdPageProps) {
   const { categoryId } = await params;
-  const { videos } = await getVideos(categoryId);
+  const { videos, categories } = await getVideos(categoryId);
 
-  return (
-    <div>
-      <HomeScreen videos={videos} />
-    </div>
+  const anotherCategories = VIDEO_CATEGORIES.filter(
+    ({ id }) => id !== categoryId && categories.includes(id),
   );
+
+  return <HomeScreen videos={videos} categories={anotherCategories} />;
 }
