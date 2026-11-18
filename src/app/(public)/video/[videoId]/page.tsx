@@ -1,13 +1,26 @@
 import { Suspense } from "react";
-import { Metadata } from "next";
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 
 import VideoScreen from "@/screen/VideoScreen";
 import { getVideoById } from "@/shared/server/videos";
 
-export const metadata: Metadata = {
-  title: "Видео: ...",
-};
+export async function generateMetadata({
+  params,
+}: VideoPageProps): Promise<Metadata> {
+  const { videoId } = await params;
+  const video = await getVideoById(videoId);
+
+  if (!video) {
+    return {
+      title: "Видео не найдено",
+    };
+  }
+
+  return {
+    title: video.title,
+  };
+}
 
 type VideoPageProps = {
   params: Promise<{ videoId: string }>;

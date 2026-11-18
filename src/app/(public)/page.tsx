@@ -11,8 +11,6 @@ const HomePage = async () => {
     categories.includes(id),
   );
 
-  console.log('someVideos', videos);
-
   return (
     <Suspense fallback={<div>Загрузка...</div>}>
       <HomeScreen videos={videos} categories={searchedCategories} />
