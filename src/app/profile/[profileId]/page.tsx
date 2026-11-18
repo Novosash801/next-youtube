@@ -1,3 +1,9 @@
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Профиль: ...",
+};
+
 type ProfileIdPageProps = {
   params: Promise<{ profileId: string }>;
 };
