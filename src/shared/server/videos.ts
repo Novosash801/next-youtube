@@ -1,7 +1,6 @@
-import { readFile, writeFile } from "node:fs/promises";
-import path from "node:path";
-
 import { VideoDto } from "@/shared/types/serverTypes";
+
+import { readVideosData, writeVideosData } from "./videosStorage";
 
 type OEmbedVideoInfo = {
   title: string;
@@ -17,22 +16,6 @@ type OEmbedVideoInfo = {
   thumbnail_width: number;
   thumbnail_url: string;
 };
-
-type VideoDataContent = {
-  id: string;
-  categoryId: string;
-};
-
-const DB_PATH = path.join(process.cwd(), "data", "videos.json");
-
-async function readVideosData(): Promise<VideoDataContent[]> {
-  const file = await readFile(DB_PATH, "utf-8");
-  return JSON.parse(file);
-}
-
-async function writeVideosData(videosData: VideoDataContent[]) {
-  await writeFile(DB_PATH, JSON.stringify(videosData, null, 2));
-}
 
 export async function getVideos(categoryIdParam?: string | null) {
   const videosData = await readVideosData();

@@ -15,10 +15,10 @@ type CategoryIdPageProps = {
 
 export default async function CategoryIdPage({ params }: CategoryIdPageProps) {
   const { categoryId } = await params;
-  const { videos, categories } = await getVideos(categoryId);
+  const { videos } = await getVideos(categoryId);
 
   const anotherCategories = VIDEO_CATEGORIES.filter(
-    ({ id }) => id !== categoryId && categories.includes(id),
+    ({ id }) => id !== categoryId,
   );
 
   return <HomeScreen videos={videos} categories={anotherCategories} />;

@@ -21,7 +21,7 @@ const HomeScreen = ({ videos, categories }: HomeScreenProps) => {
         {categories?.length > 0 &&
           categories?.map((category) => (
             <Link
-              href={`/${category.id}`}
+              href={category.id !== "all" ? `/${category.id}` : "/"}
               key={category.id}
               className={styles.categoryLink}
             >
