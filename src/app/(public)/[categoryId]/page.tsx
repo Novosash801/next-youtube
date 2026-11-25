@@ -1,8 +1,13 @@
 import { Metadata } from "next";
+import { notFound } from "next/navigation";
 
 import HomeScreen from "@/screen/HomeScreen";
 import { VIDEO_CATEGORIES } from "@/shared/constants/videoCategories";
 import { getVideos } from "@/shared/server/videos";
+
+type CategoryIdPageProps = {
+  params: Promise<{ categoryId: string }>;
+};
 
 type MetadataProps = {
   params: Promise<{ categoryId: string }>;
@@ -10,7 +15,7 @@ type MetadataProps = {
 };
 export async function generateMetadata({
   params,
-}: MetadataProps): Promise<Metadata> {
+}: CategoryIdPageProps): Promise<Metadata> {
   const { categoryId } = await params;
 
   const activeCategory = VIDEO_CATEGORIES.find(
@@ -19,7 +24,7 @@ export async function generateMetadata({
 
   if (!activeCategory) {
     return {
-      title: `Неизвестная катеогрия видео`,
+      title: "Категория не найдена",
     };
   }
 
@@ -28,13 +33,15 @@ export async function generateMetadata({
   };
 }
 
-type CategoryIdPageProps = {
-  params: Promise<{ categoryId: string }>;
-};
-
 export default async function CategoryIdPage({ params }: CategoryIdPageProps) {
   const { categoryId } = await params;
   const { videos } = await getVideos(categoryId);
+
+  const activeCategory = VIDEO_CATEGORIES.find(
+    (category) => category.id === categoryId,
+  );
+
+  if (!activeCategory) return notFound();
 
   const anotherCategories = VIDEO_CATEGORIES.filter(
     ({ id }) => id !== categoryId,

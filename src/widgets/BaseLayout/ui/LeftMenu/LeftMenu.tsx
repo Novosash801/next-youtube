@@ -43,7 +43,7 @@ const LeftMenu = () => {
           />
           Добавить видео
         </Link>
-        <Link href="/profile/1" className={styles.link}>
+        <Link href="/myVideos" className={styles.link}>
           <Image
             className={styles.icon}
             src={Profile}
