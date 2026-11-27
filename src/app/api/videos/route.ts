@@ -25,7 +25,7 @@ export async function GET(request: Request) {
 }
 
 export async function POST(request: Request) {
-  const { videoId, categoryId } = await request.json();
+  const { userId, videoId, categoryId } = await request.json();
 
   if (typeof videoId !== "string" || videoId.length === 0) {
     return Response.json(
@@ -41,7 +41,7 @@ export async function POST(request: Request) {
     );
   }
 
-  if (!(await addVideo(videoId, categoryId))) {
+  if (!(await addVideo(userId, videoId, categoryId))) {
     return Response.json(
       { ok: false, error: "Видео уже добавлено" },
       { status: 400 },

@@ -2,6 +2,7 @@ import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
 export type VideoDataContent = {
+  userId: string;
   id: string;
   categoryId: string;
 };

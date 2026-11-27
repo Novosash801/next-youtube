@@ -46,14 +46,18 @@ export async function getVideoById(videoId: string) {
   return fetchVideoInfo(videoData.id, videoData.categoryId);
 }
 
-export async function addVideo(videoId: string, categoryId: string) {
+export async function addVideo(
+  userId: string,
+  videoId: string,
+  categoryId: string,
+) {
   const videosData = await readVideosData();
 
   if (videosData.some((video) => video.id === videoId)) {
     return false;
   }
 
-  videosData.push({ id: videoId, categoryId });
+  videosData.push({ userId, id: videoId, categoryId });
   await writeVideosData(videosData);
   return true;
 }
