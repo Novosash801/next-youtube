@@ -9,10 +9,6 @@ type CategoryIdPageProps = {
   params: Promise<{ categoryId: string }>;
 };
 
-type MetadataProps = {
-  params: Promise<{ categoryId: string }>;
-  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
-};
 export async function generateMetadata({ params }: CategoryIdPageProps): Promise<Metadata> {
   const { categoryId } = await params;
 

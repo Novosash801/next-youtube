@@ -1,14 +1,14 @@
 'use client"';
 
-import React from "react";
+import { GetAllVideosDto } from "@/shared/types/serverTypes";
+import VideosList from "@/widgets/VideosLIst";
 
-type MyVideosScreenProps = {
-  userId: string;
+type MyVideoScreenProps = {
+  videos: GetAllVideosDto["videos"];
 };
 
-import styles from "./MyVideoScreen.module.css";
-const MyVideosScreen = ({ userId }: MyVideosScreenProps) => {
-  return <div>Страница с моими видео</div>;
+const MyVideosScreen = ({ videos }: MyVideoScreenProps) => {
+  return <VideosList videos={videos} />;
 };
 
 export default MyVideosScreen;

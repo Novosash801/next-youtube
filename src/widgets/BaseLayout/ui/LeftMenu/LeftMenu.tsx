@@ -27,7 +27,7 @@ const LeftMenu = () => {
         </Link>
         <Link href="/myVideos" className={styles.link}>
           <Image className={styles.icon} src={Profile} alt={"profile"} width={24} height={24} />
-          Ваши видео
+          Мои видео
         </Link>
       </nav>
     </aside>

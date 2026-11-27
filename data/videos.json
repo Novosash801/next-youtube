@@ -52,5 +52,10 @@
     "userId": "0",
     "id": "pC6u8uwD2X0",
     "categoryId": "music"
+  },
+  {
+    "userId": "12345",
+    "id": "CLFjDNGxDEk",
+    "categoryId": "all"
   }
 ]

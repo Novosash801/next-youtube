@@ -1,0 +1,126 @@
+.videoGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.videoBlock {
+  position: relative;
+  padding: 8px;
+
+  &:hover .link {
+    background-color: #342a28;
+  }
+}
+
+.link {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  transition: 0.3s background-color ease-in-out;
+}
+
+.videoImage {
+  display: flex;
+  object-fit: cover;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.videoInfoContainer {
+  display: flex;
+  gap: 12px;
+  padding: 12px 0;
+}
+
+.channelImage {
+  display: block;
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  background-color: grey;
+  border-radius: 50%;
+  z-index: 1;
+
+  &:hover {
+    background-color: #bbb;
+  }
+
+  .hiddenText {
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    opacity: 0;
+  }
+}
+
+.videoInfo {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  gap: 4px;
+}
+
+.videoTitleLink,
+.channelNameLink,
+.videoPreview {
+  position: relative;
+  z-index: 1;
+}
+
+.videoPreview {
+  display: flex;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+}
+
+.videoTitleLink {
+  display: -webkit-box;
+  overflow: hidden;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.3;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+}
+
+.channelNameLink {
+  align-self: flex-start;
+  overflow: hidden;
+  font-size: 13px;
+  color: #aaa;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.placeholder {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  color: #ffffff;
+  text-align: center;
+  background-color: #272727;
+  border-radius: 12px;
+  padding: 12px;
+
+  &:hover {
+    background-color: #fff;
+    color: #000;
+  }
+}
+
+.placeholderLink {
+  display: flex;
+  flex-direction: column;
+}
+
+.errorIcon {
+  width: 278px;
+  height: auto;
+}

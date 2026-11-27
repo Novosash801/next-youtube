@@ -23,7 +23,7 @@ export async function getVideos(categoryIdParam?: string | null, userIdParam?: s
   const videos = await Promise.all(
     videosData
       .filter(({ categoryId }) => (categoryIdParam ? categoryId === categoryIdParam : true))
-      .filter(({ userId }) => (userIdParam ? userId === categoryIdParam : true))
+      .filter(({ userId }) => (userIdParam ? userId === userIdParam : true))
       .map(({ id, categoryId }) => fetchVideoInfo(id, categoryId)),
   );
 
