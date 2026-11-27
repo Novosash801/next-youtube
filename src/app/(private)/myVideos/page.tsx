@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 const MyVideosPage = () => {
   return (
     <div>
-      <MyVideosScreen />
+      <MyVideosScreen userId={userId} />
     </div>
   );
 };

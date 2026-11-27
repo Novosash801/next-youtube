@@ -39,10 +39,9 @@
   background-color: gray;
   border-radius: 50%;
 
-   &:hover {
+  &:hover {
     background: #bbb;
   }
-
 
   .hiddenText {
     width: 0;

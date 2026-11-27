@@ -21,25 +21,14 @@ const AddVideoScreen = () => {
           ))}
         </select>
         <label className={styles.label} htmlFor="video-url">
-          <input
-            className={styles.input}
-            placeholder="ссылка на YouTube"
-            type="text"
-            {...register("videoUrl")}
-          />
+          <input className={styles.input} placeholder="ссылка на YouTube" type="text" {...register("videoUrl")} />
           <button className={styles.submitButton} type="submit">
             Загрузить
           </button>
-          <button
-            className={styles.resetButton}
-            type="reset"
-            onClick={() => setVideoId("")}
-          >
+          <button className={styles.resetButton} type="reset" onClick={() => setVideoId("")}>
             Сбросить
           </button>
-          {urlErrorMessage && (
-            <p className={styles.errorMessage}>{urlErrorMessage}</p>
-          )}
+          {urlErrorMessage && <p className={styles.errorMessage}>{urlErrorMessage}</p>}
         </label>
       </form>
 

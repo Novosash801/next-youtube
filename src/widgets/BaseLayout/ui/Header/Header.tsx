@@ -13,12 +13,7 @@ const Header = ({ profileId }: HeaderProps) => {
   return (
     <header className={styles.header}>
       <Link href="/">
-        <Image
-          src={Logo}
-          alt={"logo"}
-          width={100}
-          height={24}
-        />
+        <Image src={Logo} alt={"logo"} width={100} height={24} />
       </Link>
 
       <div className={styles.rightPart}>

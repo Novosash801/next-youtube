@@ -27,17 +27,11 @@ const VideoScreen = ({ video }: VideoScreenProps) => {
       <b className={styles.videoTitle}>{video.title}</b>
 
       <div className={styles.videoInfoContainer}>
-        <Link
-          href={`/profile/${video.authorUrl}`}
-          className={styles.channelImage}
-        >
+        <Link href={`/profile/${video.authorUrl}`} className={styles.channelImage}>
           <div className={styles.hiddenText}>{video.authorName}</div>
         </Link>
 
-        <Link
-          href={`/profile/${video.authorUrl}`}
-          className={styles.channelNameLink}
-        >
+        <Link href={`/profile/${video.authorUrl}`} className={styles.channelNameLink}>
           {video.authorName}
         </Link>
       </div>

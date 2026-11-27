@@ -5,9 +5,7 @@ import { notFound } from "next/navigation";
 import VideoScreen from "@/screen/VideoScreen";
 import { getVideoById } from "@/shared/server/videos";
 
-export async function generateMetadata({
-  params,
-}: VideoPageProps): Promise<Metadata> {
+export async function generateMetadata({ params }: VideoPageProps): Promise<Metadata> {
   const { videoId } = await params;
   const video = await getVideoById(videoId);
 

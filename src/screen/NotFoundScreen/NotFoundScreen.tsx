@@ -10,12 +10,7 @@ const NotFoundPage = () => {
   return (
     <div className={styles.container}>
       <div className={styles.notFound}>
-        <Image
-          unoptimized
-          className={styles.image}
-          src={NotFoundImage}
-          alt={"not-found"}
-        />
+        <Image unoptimized className={styles.image} src={NotFoundImage} alt={"not-found"} />
         <p>Эта страница недоступна</p>
         <p>Подсказать что-то ?</p>
 

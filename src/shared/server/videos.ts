@@ -17,20 +17,17 @@ type OEmbedVideoInfo = {
   thumbnail_url: string;
 };
 
-export async function getVideos(categoryIdParam?: string | null) {
+export async function getVideos(categoryIdParam?: string | null, userIdParam?: string | null) {
   const videosData = await readVideosData();
 
   const videos = await Promise.all(
     videosData
-      .filter(({ categoryId }) =>
-        categoryIdParam ? categoryId === categoryIdParam : true,
-      )
+      .filter(({ categoryId }) => (categoryIdParam ? categoryId === categoryIdParam : true))
+      .filter(({ userId }) => (userIdParam ? userId === categoryIdParam : true))
       .map(({ id, categoryId }) => fetchVideoInfo(id, categoryId)),
   );
 
-  const categories = [
-    ...new Set(videosData.map(({ categoryId }) => categoryId)),
-  ];
+  const categories = [...new Set(videosData.map(({ categoryId }) => categoryId))];
 
   return { videos, categories };
 }
@@ -46,11 +43,7 @@ export async function getVideoById(videoId: string) {
   return fetchVideoInfo(videoData.id, videoData.categoryId);
 }
 
-export async function addVideo(
-  userId: string,
-  videoId: string,
-  categoryId: string,
-) {
+export async function addVideo(userId: string, videoId: string, categoryId: string) {
   const videosData = await readVideosData();
 
   if (videosData.some((video) => video.id === videoId)) {
@@ -62,10 +55,7 @@ export async function addVideo(
   return true;
 }
 
-async function fetchVideoInfo(
-  videoId: string,
-  categoryId: string,
-): Promise<VideoDto> {
+async function fetchVideoInfo(videoId: string, categoryId: string): Promise<VideoDto> {
   try {
     const res = await fetch(
       `https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${videoId}&format=json`,

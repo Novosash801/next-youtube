@@ -56,12 +56,7 @@ type VideoThumbnailProps = {
   authorUrl: string | null;
 };
 
-const VideoThumbnail = ({
-  videoId,
-  title,
-  authorName,
-  authorUrl,
-}: VideoThumbnailProps) => {
+const VideoThumbnail = ({ videoId, title, authorName, authorUrl }: VideoThumbnailProps) => {
   const [hasError, setHasError] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
 
@@ -95,9 +90,7 @@ const VideoThumbnail = ({
 
       <div className={styles.videoInfoContainer}>
         <Link href={`/profile/${authorUrl}`} className={styles.channelImage}>
-          <div className={styles.hiddenText}>
-            {authorName ?? "Название канала"}
-          </div>
+          <div className={styles.hiddenText}>{authorName ?? "Название канала"}</div>
         </Link>
 
         <div className={styles.videoInfo}>
@@ -105,10 +98,7 @@ const VideoThumbnail = ({
             <b>{title ?? "Название видео"}</b>
           </Link>
 
-          <Link
-            href={`/profile/${authorUrl}`}
-            className={styles.channelNameLink}
-          >
+          <Link href={`/profile/${authorUrl}`} className={styles.channelNameLink}>
             {authorName ?? "Название канала"}
           </Link>
         </div>

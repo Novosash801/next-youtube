@@ -7,9 +7,7 @@ import { getVideos } from "@/shared/server/videos";
 const HomePage = async () => {
   const { videos, categories } = await getVideos();
 
-  const searchedCategories = VIDEO_CATEGORIES.filter(({ id }) =>
-    categories.includes(id),
-  );
+  const searchedCategories = VIDEO_CATEGORIES.filter(({ id }) => categories.includes(id));
 
   return (
     <Suspense fallback={<div>Загрузка...</div>}>
